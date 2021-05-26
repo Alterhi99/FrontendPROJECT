@@ -8,15 +8,14 @@ font-family:'Open Sans',sans-serif;
   text-align: center;
   color: #1A1A1A;
   margin-top: 60px;
+
 }
 #inspire {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
-
 .container.fill-height {
   align-items: normal;
 }
-
 a.side_bar_link {
   text-decoration: none;
 }
@@ -34,7 +33,6 @@ v-img{
   margin-left: auto;
   margin-right: auto;
 }
-
 #up{
   position:absolute;
   top:30px;
@@ -51,7 +49,6 @@ v-img{
 .elevation-1{
 max-width:200%;
 max-height:100%;
-
 }
 a.side_bar_link:hover div.v-list-item__content{
   color: #FFC600!important;
@@ -59,7 +56,6 @@ a.side_bar_link:hover div.v-list-item__content{
 a.side_bar_link:hover i.v-icon {
   color: #FFC600!important;
 }
-
 a.side_bar_link + div.v-list-item__content:hover{
   opacity:50%;
 }

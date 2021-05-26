@@ -11,7 +11,7 @@
       <v-flex align-self-center="true" class="center">
         <v-img :src="logo" max-height="150" max-width="150" class="center"></v-img>
       </v-flex>
-      <br>
+      <v-divider></v-divider>
       <router-link v-bind:to="{ name: 'Dashboard' }" class="side_bar_link" active-class="active">
         <v-list-item>
           <v-list-item-action>
@@ -69,14 +69,15 @@
             <v-icon style="color:#1A1A1A">mdi-calendar</v-icon>
           </v-btn>
         </template>
+        <calcomp />
       </v-menu>
     </div>
     <div class="text-center">
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn outlined style="color:#1A1A1A;background-color:#FFC600" icon v-bind="attrs" v-on="on">
+          <v-btn outlined style="color:#1A1A1A;" icon v-bind="attrs" v-on="on">
             <v-avatar size="30">
-              <v-icon style="color:#1A1A1A;background-color:#FFC600">mdi-account</v-icon>
+              <v-icon style="color:#1A1A1A;">mdi-account</v-icon>
             </v-avatar>
 
           </v-btn>
@@ -106,6 +107,7 @@
 <script>
 import './assets/stylesheets/main.css';
 import foot1 from './assets/logonav.png';
+import calcomp from './components/subcomponents/calendar';
 
 // eslint-disable-next-line
 export default { //import { mdiCogs } from '@mdi/js';
@@ -125,7 +127,7 @@ export default { //import { mdiCogs } from '@mdi/js';
     }],
   }),
   components: { // eslint-disable-next-line
-
+    calcomp,
   },
   methods: {
     /* eslint-disable */
