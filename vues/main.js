@@ -18,7 +18,6 @@ Vue.use(Vuetify);
 Vue.config.productionTip = false;
 
 /* eslint-disable */
-
 new Vue({
   vuetify: new Vuetify({
     theme: {
@@ -34,6 +33,20 @@ new Vue({
 });
 
 /*new Vue({
+  vuetify: new Vuetify({
+    theme: {
+      disable: true
+    }
+  }),
+  el: '#login',
+  components: {
+    Login
+  },
+  template: '<Login/>',
+});
+
+
+new Vue({
   el: '#cal',
   components: {
     Calendar

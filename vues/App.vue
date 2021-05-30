@@ -1,7 +1,7 @@
 <template>
 <!-- eslint-disable max-len -->
 <v-app id="inspire">
-  <v-navigation-drawer color="#1A1A1A" fixed v-model="drawer" permanent :mini-variant.sync="drawer" app>
+  <v-navigation-drawer v-if="happ" color="#1A1A1A" fixed v-model="drawer" permanent :mini-variant.sync="drawer" app :src='barImage'>
     <v-btn absolute right fab @click="drawer = !drawer" :style="{color:white,top: '50%', transform:'translate(75%, -50%)'}">
       <v-icon v-if="drawer">mdi-chevron-right</v-icon>
       <v-icon v-else>mdi-chevron-left</v-icon>
@@ -9,9 +9,9 @@
     <v-list dense>
       <!-- vnav images-->
       <v-flex align-self-center="true" class="center">
-        <v-img :src="logo" max-height="150" max-width="150" class="center"></v-img>
+        <v-img :src="logo" max-height="120" max-width="120" class="center"></v-img>
       </v-flex>
-      <v-divider></v-divider>
+      <v-divider style="color:white;box-shadow: 1px 1px;"></v-divider>
       <router-link v-bind:to="{ name: 'Dashboard' }" class="side_bar_link" active-class="active">
         <v-list-item>
           <v-list-item-action>
@@ -56,14 +56,12 @@
       </router-link>
     </v-list>
   </v-navigation-drawer>
-  <v-app-bar fixed app class="topbar">
+  <v-app-bar fixed app class="topbar" :src="barImage">
     <v-icon style="color:#1A1A1A">{{titleIcon}}</v-icon>&nbsp;&nbsp;
     <v-toolbar-title style="color:#1A1A1A" v-text="this.$route.name"></v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-text-field rounded hide-details prepend-icon="mdi-magnify" single-line label="Search" outlined></v-text-field>
-    <v-spacer></v-spacer>
     <div>
-      <v-menu offset-y>
+      <v-menu bottom offset-y offset-x>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
             <v-icon style="color:#1A1A1A">mdi-calendar</v-icon>
@@ -75,13 +73,9 @@
     <div class="text-center">
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn outlined style="color:#1A1A1A;" icon v-bind="attrs" v-on="on">
-            <v-avatar size="30">
-              <v-icon style="color:#1A1A1A;">mdi-account</v-icon>
-            </v-avatar>
-
+          <v-btn outlined style="color:#1A1A1A;"  v-bind="attrs" v-on="on">
+            Admin
           </v-btn>
-          Admin
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index">
@@ -112,8 +106,10 @@ import calcomp from './components/subcomponents/calendar';
 // eslint-disable-next-line
 export default { //import { mdiCogs } from '@mdi/js';
   data: () => ({
+    barImage: 'https://i.pinimg.com/564x/e8/29/fd/e829fd11f548737c67fa74f4b064fdd8.jpg',
     drawer: null,
     logo: foot1,
+    happ: true,
     titleIcon: 'home',
     props: { // eslint-disable-next-line
       source: String,

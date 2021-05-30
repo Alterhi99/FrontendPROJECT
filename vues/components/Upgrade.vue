@@ -4,62 +4,31 @@
     <v-btn style="background-color:#FFC600" @click="enableTable" v-on:click="$emit(td)">
       View list
     </v-btn>
-    <v-btn style="background-color:#1A1A1A;color:white" @click="disableTable" v-on:click="$emit(td)">
+    <v-btn style="background-color:#1A1A1A;color:white"
+     @click="disableTable" v-on:click="$emit(td)">
       Create
     </v-btn>
   </div>
   <!-- eslint-disable -->
-  <div id="down">
-    <template>
-      <v-data-table :hidden="td" :disabled="td" loading loading-text="Loading... Please wait" dense light :headers="headers" :items="recruiters" sort-by="calories" class="elevation-1">
+    <v-layout row wrap child-flex fill-height width="100vw" height="100vw">
+      <v-data-table light :search="search" :hidden="td" :disabled="td" loading loading-text="Loading... Please wait"
+      dense :headers="headers" :items="recruiters" sort-desc="id"  >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title style="color:#2B9EB3">Recruiters</v-toolbar-title>
+            <v-toolbar-title>
+            <v-select
+            v-model="tableSelect"
+            :items="tableSelectItems"
+            item-text="state"
+            item-value="abbr"
+            label="Select"
+            return-object
+            single-line
+            item-color="#2B9EB3"
+            ></v-select>
+           </v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialog" max-width="500px">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                  New Item
-                </v-btn>
-              </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.name" label=""></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.calories" label=""></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.fat" label=""></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.carbs" label=""></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.protein" label=""></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cancel
-                  </v-btn>
-                  <v-btn color="blue darken-1" text @click="save">
-                    Save
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
             <v-dialog v-model="dialogDelete" max-width="500px">
               <v-card>
                 <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
@@ -71,6 +40,14 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+            <v-spacer/><v-spacer/><v-spacer/><v-spacer/><v-spacer/>
+            <v-row>
+              <v-col>
+                <v-text-field outlined dense v-model='search'
+                append-icon="mdi-magnify" single-line label="Search">
+                </v-text-field>
+              </v-col>
+            </v-row>
           </v-toolbar>
         </template>
         <template v-slot:item.actions="{ item }">
@@ -87,12 +64,9 @@
           </v-btn>
         </template>
       </v-data-table>
-</template>
-
-</div>
-<div id="validation">
-  <template>
-  <validation-observer ref="observer" v-slot="{ invalid }" :hidden="!td">
+    </v-layout>
+  <v-layout align-baseline width="100vw" height="100vw" right="10px">
+  <validation-observer  ref="observer" v-slot="{ invalid }" :hidden="!td">
     <form @submit.prevent="submit">
       <validation-provider v-slot="{ errors }" name="Nom" rules="alpha_spaces|required|max:26">
         <v-text-field v-model="nom" :counter="26" :error-messages="errors" label="Nom" required></v-text-field>
@@ -104,17 +78,17 @@
         <v-text-field v-model="email" :error-messages="errors" label="E-mail" required></v-text-field>
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="type" rules="required">
-        <v-select v-model="select" :items="items" :error-messages="errors" label="Type" data-vv-name="select" required></v-select>
+        <v-select v-model="select" :items="items" :error-messages="errors" label="Rôle" data-vv-name="select" required></v-select>
       </validation-provider>
-      <validation-provider v-slot="{ errors }" name="Nom Entreprise" rules="required|max:26">
+      <validation-provider v-slot="{ errors }" name="NomEntreprise" rules="required|max:26">
         <v-text-field v-model="nomEntr" :counter="26" :error-messages="errors" label="Nom entreprise" required></v-text-field>
       </validation-provider>
-      <validation-provider v-slot="{ errors }" name="Numéro Offre" rules="required|max:26">
-        <v-text-field v-model="numOffre" :counter="26" :error-messages="errors" label="Numéro offre" required></v-text-field>
+      <validation-provider v-slot="{ errors }" name="Password" rules="required|max:26">
+        <v-text-field v-model="password" :counter="26" :error-messages="errors" label="Password" required></v-text-field>
       </validation-provider>
-      <validation-provider v-slot="{ errors }" rules="required" name="checkbox">
+      <!--<validation-provider v-slot="{ errors }" rules="required" name="checkbox">
         <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option" type="checkbox" required></v-checkbox>
-      </validation-provider>
+      </validation-provider>-->
 
       <v-btn class="mr-4" type="submit" :disabled="invalid">
         submit
@@ -124,10 +98,10 @@
       </v-btn>
     </form>
   </validation-observer>
-  </template>
-</div>
+  </v-layout>
 </v-layout>
 </template>
+
 <script type="text/javascript">
 import {
   /* eslint-disable */
@@ -144,10 +118,12 @@ import {
   ValidationProvider,
   setInteractionMode
 } from 'vee-validate';
+import axios from 'axios';
+
 
 /* eslint-disable */
 setInteractionMode('eager');
-
+// Validation des nombre de
 extend('digits', {
   ...digits,
   message: '{_field_} needs to be {length} digits. ({_value_})',
@@ -173,49 +149,70 @@ extend('email', {
   message: 'Email must be valid',
 });
 
+extend('alpha_spaces', {
+  ...alpha_spaces,
+  message: '{_field_} must contain only letters!',
+});
+
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
   },
   data: () => ({
-    td:false,
+    td: false,
     dialog: false,
     dialogDelete: false,
+    search: '',
     headers: [{
         text: 'Id',
         align: 'start',
         sortable: false,
         value: 'id',
+        align: 'center',
+        divider: 'true',
       },
       {
         text: 'Nom',
-        value: 'nom'
+        value: 'nom',
+        align: 'center',
+        divider: 'true',
       },
       {
         text: 'Prénom',
-        value: 'prenom'
+        value: 'prenom',
+        align: 'center',
+        divider: 'true',
       },
       {
         text: 'Email',
-        value: 'email'
+        value: 'email',
+        align: 'center',
+        divider: 'true',
       },
       {
         text: 'Type',
-        value: 'type'
+        value: 'type',
+        align: 'center',
+        divider: 'true',
       },
       {
         text: 'Nom entreprises',
-        value: 'nomEntreprise'
+        value: 'nomEntreprise',
+        align: 'center',
+        divider: 'true',
       },
-      {
+      /*{
         text: 'Numero Offre',
-        value: 'numOffre'
-      },
+        value: 'numOffre',
+        align: 'center',
+        divider: 'true',
+      },*/
       {
         text: 'Actions',
         value: 'actions',
-        sortable: false
+        sortable: false,
+        divider: 'true',
       },
 
     ],
@@ -241,12 +238,18 @@ export default {
     email: '',
     select: null,
     nomEntr: '',
+    password:'',
     numOffre: '',
     items: [
-      'Type 1',
-      'Type 2',
+      'Jobseeker',
+      'Recruiter',
     ],
     checkbox: null,
+    tableSelect:{ state: 'Florida', abbr: 'FL' },
+    tableSelectItems: [
+          { state: 'Recruiter', abbr: 'FL' },
+          { state: 'Jobseeker'},
+        ],
     //###############################################################
   }),
 
@@ -281,33 +284,109 @@ export default {
     },
     initialize() {
       this.recruiters = [{
-          id: 1,
-          nom: "Aitouakli",
-          prenom: "Hichem",
-          email: "alterhi99@gmail.com",
-          type: "Job seeker",
-          nomEntreprise: "N/A",
-          numOffre: "N/A",
-
-        },
-        {
-
-        },
-        {
-
-        },
-        {
-
-        },
-        {
-
-        },
-        {
-
-        },
-        {
-
-        },
+    "id": 8,
+    "nom": "Lakeisha ",
+    "prenom": "Chapman",
+    "email": "lakeishachapman@zaphire.com",
+    "type": "Recruiter",
+    "nomEntreprise": "EXOZENT"
+  },
+  {
+    "id": 10,
+    "nom": "Rosalind ",
+    "prenom": "Lane",
+    "email": "rosalindlane@exozent.com",
+    "type": "Recruiter",
+    "nomEntreprise": "SHEPARD"
+  },
+  {
+    "id": 2,
+    "nom": "Leon ",
+    "prenom": "Everett",
+    "email": "leoneverett@shepard.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "AUTOGRATE"
+  },
+  {
+    "id": 9,
+    "nom": "Deborah ",
+    "prenom": "Cole",
+    "email": "deborahcole@autograte.com",
+    "type": "Recruiter",
+    "nomEntreprise": "REMOLD"
+  },
+  {
+    "id": 6,
+    "nom": "Richards ",
+    "prenom": "Walters",
+    "email": "richardswalters@remold.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "PYRAMIS"
+  },
+  {
+    "id": 8,
+    "nom": "Velez ",
+    "prenom": "Fry",
+    "email": "velezfry@pyramis.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "MUSANPOLY"
+  },
+  {
+    "id": 9,
+    "nom": "Peggy ",
+    "prenom": "Kelley",
+    "email": "peggykelley@musanpoly.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "BLEENDOT"
+  },
+  {
+    "id": 6,
+    "nom": "Joni ",
+    "prenom": "Phelps",
+    "email": "joniphelps@bleendot.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "ANIXANG"
+  },
+  {
+    "id": 9,
+    "nom": "Odom ",
+    "prenom": "Lancaster",
+    "email": "odomlancaster@anixang.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "SECURIA"
+  },
+  {
+    "id": 4,
+    "nom": "Downs ",
+    "prenom": "York",
+    "email": "downsyork@securia.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "EVENTIX"
+  },
+  {
+    "id": 7,
+    "nom": "Berg ",
+    "prenom": "Powell",
+    "email": "bergpowell@eventix.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "AQUASSEUR"
+  },
+  {
+    "id": 6,
+    "nom": "Madge ",
+    "prenom": "Long",
+    "email": "madgelong@aquasseur.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "EMPIRICA"
+  },
+  {
+    "id": 10,
+    "nom": "Stephenson ",
+    "prenom": "Petty",
+    "email": "stephensonpetty@empirica.com",
+    "type": "Jobseeker",
+    "nomEntreprise": "ROBOID"
+  },
       ]
     },
 
@@ -358,8 +437,40 @@ export default {
     enableTable() {
       this.td = false;
     },
-    submit() {
-      this.$refs.observer.validate()
+    async submit() {
+      if(this.$refs.observer.validate()){
+        return axios({
+          method: 'post',
+          data: {
+          Nom: this.nom,
+          Prenom: this.prenom,
+          Email: this.email,
+          password: this.password,
+          role:"Jobseeker",
+          NomEntreprise:this.nomEntr,
+
+
+          },
+          url: 'http://localhost:3000/signup',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(() => {
+          this.$swal(
+            'Great!',
+            'You have been successfully registered!',
+            'success',
+          );
+          this.$router.push({ name: 'signup' });
+
+        })
+        .catch((error) => {
+          const message = error.response.data.message;
+          this.$swal('Oh no!', `${message}`, 'error');
+        });
+      }
+      return true;
     },
     clear() {
       this.name = ''
