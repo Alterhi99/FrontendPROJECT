@@ -1,7 +1,7 @@
 <template>
 <!-- eslint-disable max-len -->
 <v-app id="inspire">
-  <v-navigation-drawer v-if="happ" color="#1A1A1A" fixed v-model="drawer" permanent :mini-variant.sync="drawer" app :src='barImage'>
+  <v-navigation-drawer color="#1A1A1A" fixed v-model="drawer" permanent :mini-variant.sync="drawer" app :src='barImage'>
     <v-btn absolute right fab @click="drawer = !drawer" :style="{color:white,top: '50%', transform:'translate(75%, -50%)'}">
       <v-icon v-if="drawer">mdi-chevron-right</v-icon>
       <v-icon v-else>mdi-chevron-left</v-icon>
@@ -109,7 +109,7 @@ export default { //import { mdiCogs } from '@mdi/js';
     barImage: 'https://i.pinimg.com/564x/e8/29/fd/e829fd11f548737c67fa74f4b064fdd8.jpg',
     drawer: null,
     logo: foot1,
-    happ: true,
+    login: false,
     titleIcon: 'home',
     props: { // eslint-disable-next-line
       source: String,
@@ -142,6 +142,7 @@ export default { //import { mdiCogs } from '@mdi/js';
         }
       }
     }, //changeIcon stops here
+
   },
 };
 </script>

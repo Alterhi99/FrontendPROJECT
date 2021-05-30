@@ -59,7 +59,7 @@
           </v-icon>
         </template>
         <template v-slot:no-data>
-          <v-btn color="primary" @click="initialize">
+          <v-btn color="#1A1A1A" @click="initialize">
             Reset
           </v-btn>
         </template>
