@@ -7,22 +7,24 @@
   <label for="tab-1" class="tab">Sign In</label>
   <input id="tab-2" type="radio" name="tab" class="sign-up">
   <label for="tab-2" class="tab">Sign Up</label>
-  <div class="login-form">
+  <v-form class="login-form" @submit="loginSubmit">
     <div class="sign-in-htm">
       <div class="group">
-        <label for="user" class="label">Username</label>
-        <input id="user" type="text" class="input">
+         <v-text-field id="user" label="e-mail" v-model="input.Email"
+         :rules="emailRules" required>
+         </v-text-field>
       </div>
       <div class="group">
-        <label for="pass" class="label">Password</label>
-        <input id="pass" type="password" class="input" data-type="password">
+        <v-text-field id="pass" label="password" v-model="input.password"
+        :type="show1 ? 'text' : 'password'" required>
+        </v-text-field>
       </div>
       <div class="group">
         <input id="check" type="checkbox" class="check" checked>
         <label for="check"><span class="icon"></span> Keep me Signed in</label>
       </div>
       <div class="group">
-        <v-btn class="button" style="background-color:#FFC600" @click="showPage">
+        <v-btn class="button" type="submit" style="background-color:#FFC600" @click="loginSubmit">
           Sing in
         </v-btn>
       </div>
@@ -58,7 +60,7 @@
         <label for="tab-1">Already Member?</a></label>
       </div>
     </div>
-  </div>
+  </v-form>
 </div>
 </div>
 <div class="login-logo">
@@ -69,39 +71,28 @@
 </template>
 <script type="text/javascript"> /* eslint-disable */
 import logox from '../assets/logox.png';
+import axios from 'axios';
+
 export default {
   data() {
     return {
       logimg: logox,
-      dialog: true,
-      tab: 0,
-      tabs: [
-        { name: 'Login', icon: 'mdi-account' },
-        { name: 'Register', icon: 'mdi-account-outline' },
-      ],
-      valid: true,
-
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      verify: '',
-      loginPassword: '',
-      loginEmail: '',
-      loginEmailRules: [
-        v => !!v || 'Required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      emailRules: [
-        v => !!v || 'Required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-
-      show1: false,
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => (v && v.length >= 8) || 'Min 8 characters',
+      Email: '',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
+        show1: false,
+       password: 'Password',
+       rules: {
+         required: value => !!value || 'Required.',
+         emailMatch: () => ('The email and password you entered don\'t match'),
+       },
+      input :{
+        Email: "",
+        password: ""
       },
+      errors: [],
     };
   },
   computed: {
@@ -124,6 +115,19 @@ export default {
     showPage(){
       this.$router.push("Dashboard");
     },
+    loginSubmit (evt) {
+      evt.preventDefault()
+      const kek = JSON.stringify(this.input);
+      console.log(kek);
+      axios.post('http://localhost:3000/login',{Email:this.input.Email, password: this.input.password}).then(response => {
+        localStorage.setItem('jwtToken', response.data.token)
+        this.$router.push({name: 'Dashboard'})
+      }).catch(e => {
+        console.log(e)
+        this.errors.push(e)
+        alert("Invalid email/password")
+      })
+    }
   },
 
 };

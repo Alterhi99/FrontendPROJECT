@@ -43,7 +43,8 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
  try {
-  const { Email, Password } = req.body;
+  console.log(req);
+  const { Email, password } = req.body;
   const user = await User.findOne({ Email });
   if (!user) return next(new Error('Email does not exist'));
   //Password

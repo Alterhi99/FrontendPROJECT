@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const path = require('path')
-
+var cors = require('cors');
 const User = require('./model/user.model')
 
 const routes = require('./routes/user.routes');
@@ -23,7 +23,7 @@ mongoose
  });
 
 app.use(bodyParser.urlencoded({ extended: true }));//obsolète
-
+app.use(bodyParser.json());
 
 //token verification
 app.use(async (req, res, next) => {
@@ -45,7 +45,12 @@ app.use(async (req, res, next) => {
   next();
  }
 });
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "localhost:8081"),
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"),
+  next()
+});
+app.use(cors());
 app.use('/', routes);
 app.listen(PORT, () => {
   console.log('Server is listening on Port:', PORT)
