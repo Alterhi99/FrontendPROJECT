@@ -5,8 +5,10 @@ const jwt = require('jsonwebtoken');
 const path = require('path')
 var cors = require('cors');
 const User = require('./model/user.model')
-
-const routes = require('./routes/user.routes');
+const ora = require('ora');
+const route = require('./routes/users.routes');
+const aut = require('./routes/Aut.routes');
+const offer=require('./routes/offer.routes');
 
 require("dotenv").config({
  path: path.join(__dirname, "../.env")
@@ -51,7 +53,12 @@ app.use(function(req, res, next) {
   next()
 });
 app.use(cors());
-app.use('/', routes);
+app.use('/', route);
+app.use('/', aut);
+app.use('/', offer);
+
 app.listen(PORT, () => {
-  console.log('Server is listening on Port:', PORT)
+  const spinner = ora('Listening to ports...').start();
+  console.log('\nServer is listening on Port:', PORT)
+  spinner.stop();
 });

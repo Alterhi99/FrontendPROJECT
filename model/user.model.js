@@ -1,4 +1,4 @@
-// server/models/userModel.js
+  // server/models/userModel.js
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -7,6 +7,7 @@ const UserSchema = new Schema({
    type: String,
    required: true,
    trim: true
+
   },
  Prenom: {
    type: String,
@@ -16,7 +17,7 @@ const UserSchema = new Schema({
  Email: {
   type: String,
   required: true,
-  unique: true,
+  unique:true,
   trim: true
  },
  password: {
@@ -24,15 +25,21 @@ const UserSchema = new Schema({
   required: true
  },
  NomEntreprise: {
-  type: String,
+  type: String
+
  },
  role: {
   type: String,
   default: 'Jobseeker',
-  enum: ["Jobseeker", "Recruiter", "admin"]
+  enum: ["Jobseeker", "Recuiter", "admin"]
+ },
+Compte_verified: {
+   type: Boolean,
+  default: false,
  },
  accessToken: {
   type: String
+
  }
 });
 

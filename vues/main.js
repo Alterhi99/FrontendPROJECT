@@ -10,7 +10,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import App from './App';
 import router from './router';
-
+import store from './store/store';
 
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
@@ -29,9 +29,9 @@ new Vue({
   components: {
     App
   },
+  store: store,
   template: '<App/>',
 });
-
 /*new Vue({
   vuetify: new Vuetify({
     theme: {

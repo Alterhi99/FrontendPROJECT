@@ -10,9 +10,9 @@
     </v-btn>
   </div>
   <!-- eslint-disable -->
-    <v-layout row wrap child-flex fill-height width="100vw" height="100vw">
-      <v-data-table light :search="search" :hidden="td" :disabled="td" loading loading-text="Loading... Please wait"
-      dense :headers="headers" :items="recruiters" sort-desc="id"  >
+    <v-layout class="vdata" row wrap child-flex fill-height width="100vw" height="100vw">
+      <v-data-table  dark :search="search" :hidden="td" :disabled="td" loading loading-text="Loading... Please wait"
+      dense item-key="id" calculate-widths :headers="headers" :items="recruiters" sort-by="id" :show-select="role" >
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>
@@ -54,7 +54,7 @@
           <v-icon style="color:#2B9EB3" small class="mr-2" @click="editItem(item)">
             mdi-pencil
           </v-icon>
-          <v-icon style="color:#1A1A1A" small @click="deleteItem(item)">
+          <v-icon style="color:red" small @click="deleteItem(item)">
             mdi-delete
           </v-icon>
         </template>
@@ -89,11 +89,10 @@
       <!--<validation-provider v-slot="{ errors }" rules="required" name="checkbox">
         <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option" type="checkbox" required></v-checkbox>
       </validation-provider>-->
-
-      <v-btn class="mr-4" type="submit" :disabled="invalid">
+      <v-btn style="background-color:#FFC600" large type="submit" :disabled="invalid">
         submit
       </v-btn>
-      <v-btn @click="clear">
+      <v-btn dark large @click="clear">
         clear
       </v-btn>
     </form>
@@ -167,7 +166,7 @@ export default {
     headers: [{
         text: 'Id',
         align: 'start',
-        sortable: false,
+        sortable: true,
         value: 'id',
         align: 'center',
         divider: 'true',
@@ -284,7 +283,7 @@ export default {
     },
     initialize() {
       this.recruiters = [{
-    "id": 8,
+    "id": 1,
     "nom": "Lakeisha ",
     "prenom": "Chapman",
     "email": "lakeishachapman@zaphire.com",
@@ -292,7 +291,7 @@ export default {
     "nomEntreprise": "EXOZENT"
   },
   {
-    "id": 10,
+    "id": 2,
     "nom": "Rosalind ",
     "prenom": "Lane",
     "email": "rosalindlane@exozent.com",
@@ -300,7 +299,7 @@ export default {
     "nomEntreprise": "SHEPARD"
   },
   {
-    "id": 2,
+    "id": 3,
     "nom": "Leon ",
     "prenom": "Everett",
     "email": "leoneverett@shepard.com",
@@ -308,7 +307,7 @@ export default {
     "nomEntreprise": "AUTOGRATE"
   },
   {
-    "id": 9,
+    "id": 4,
     "nom": "Deborah ",
     "prenom": "Cole",
     "email": "deborahcole@autograte.com",
@@ -316,7 +315,7 @@ export default {
     "nomEntreprise": "REMOLD"
   },
   {
-    "id": 6,
+    "id": 5,
     "nom": "Richards ",
     "prenom": "Walters",
     "email": "richardswalters@remold.com",
@@ -324,7 +323,7 @@ export default {
     "nomEntreprise": "PYRAMIS"
   },
   {
-    "id": 8,
+    "id": 6,
     "nom": "Velez ",
     "prenom": "Fry",
     "email": "velezfry@pyramis.com",
@@ -332,7 +331,7 @@ export default {
     "nomEntreprise": "MUSANPOLY"
   },
   {
-    "id": 9,
+    "id": 7,
     "nom": "Peggy ",
     "prenom": "Kelley",
     "email": "peggykelley@musanpoly.com",
@@ -340,7 +339,7 @@ export default {
     "nomEntreprise": "BLEENDOT"
   },
   {
-    "id": 6,
+    "id": 8,
     "nom": "Joni ",
     "prenom": "Phelps",
     "email": "joniphelps@bleendot.com",
@@ -356,7 +355,7 @@ export default {
     "nomEntreprise": "SECURIA"
   },
   {
-    "id": 4,
+    "id": 10,
     "nom": "Downs ",
     "prenom": "York",
     "email": "downsyork@securia.com",
@@ -364,7 +363,7 @@ export default {
     "nomEntreprise": "EVENTIX"
   },
   {
-    "id": 7,
+    "id": 11,
     "nom": "Berg ",
     "prenom": "Powell",
     "email": "bergpowell@eventix.com",
@@ -372,7 +371,7 @@ export default {
     "nomEntreprise": "AQUASSEUR"
   },
   {
-    "id": 6,
+    "id": 12,
     "nom": "Madge ",
     "prenom": "Long",
     "email": "madgelong@aquasseur.com",
@@ -380,7 +379,7 @@ export default {
     "nomEntreprise": "EMPIRICA"
   },
   {
-    "id": 10,
+    "id": 13,
     "nom": "Stephenson ",
     "prenom": "Petty",
     "email": "stephensonpetty@empirica.com",
@@ -467,13 +466,13 @@ export default {
         })
         .catch((error) => {
           const message = error.response.data.message;
-          this.$swal('Oh no!', `${message}`, 'error');
+          this.Swal.fire('Oh no!', `${message}`, 'error');
         });
       }
       return true;
     },
     clear() {
-      this.name = ''
+      this.nom = ''
       this.phoneNumber = ''
       this.email = ''
       this.select = null

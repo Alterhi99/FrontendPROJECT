@@ -81,7 +81,10 @@ div.v-navigation-drawer__image{
 div.v-toolbar__image{
   opacity: .0;
 }
-div.theme--light.v-select .v-select__selections{
+div.theme--dark.v-select .v-select__selections{
   color:#2B9EB3;
   font-weight:bold;
+}
+div.vdata{
+  padding-left:10px;
 }

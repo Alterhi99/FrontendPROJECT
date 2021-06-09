@@ -1,7 +1,7 @@
 <template>
 <!-- eslint-disable max-len -->
 <v-app id="inspire">
-  <v-navigation-drawer color="#1A1A1A" fixed v-model="drawer" permanent :mini-variant.sync="drawer" app :src='barImage'>
+  <v-navigation-drawer color="#1A1A1A" fixed v-model="drawer" permanent :mini-variant.sync="drawer" app :src='barImage' :hidden="!login">
     <v-btn absolute right fab @click="drawer = !drawer" :style="{color:white,top: '50%', transform:'translate(75%, -50%)'}">
       <v-icon v-if="drawer">mdi-chevron-right</v-icon>
       <v-icon v-else>mdi-chevron-left</v-icon>
@@ -56,7 +56,7 @@
       </router-link>
     </v-list>
   </v-navigation-drawer>
-  <v-app-bar fixed app class="topbar" :src="barImage">
+  <v-app-bar fixed app class="topbar" :src="barImage" :hidden="!login">
     <v-icon style="color:#1A1A1A">{{titleIcon}}</v-icon>&nbsp;&nbsp;
     <v-toolbar-title style="color:#1A1A1A" v-text="this.$route.name"></v-toolbar-title>
     <v-spacer></v-spacer>
@@ -80,6 +80,12 @@
         <v-list>
           <v-list-item v-for="(item, index) in items" :key="index">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
+
+          </v-list-item>
+          <v-list-item>
+             <v-list-item-content>
+              <v-list-item-action @click="Logout">Sign out</v-list-item-action>
+            </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -88,12 +94,12 @@
   <v-main>
     <v-container fluid>
       <div id="app">
-        <router-view />
+        <router-view @login="showEverything" />
       </div>
     </v-container>
   </v-main>
-  <v-footer color="#FFC600" app>
-    <span style="color:#1A1A1A">&copy;Job Hunt 2021</span>
+  <v-footer color="#FFC600" app :hidden="!login">
+    <span style="color:#1A1A1A;font-weight:bold">&copy;Job Hunt™ 2021</span>
   </v-footer>
 </v-app>
 </template>
@@ -118,12 +124,13 @@ export default { //import { mdiCogs } from '@mdi/js';
       title: 'Profile'
     }, { // eslint-disable-next-line
       title: 'Settings'
-    }, { // eslint-disable-next-line
-      title: 'Sign out'
     }],
   }),
   components: { // eslint-disable-next-line
     calcomp,
+  }, /*eslint-disable*/
+  mounted:{
+
   },
   methods: {
     /* eslint-disable */
@@ -142,7 +149,26 @@ export default { //import { mdiCogs } from '@mdi/js';
         }
       }
     }, //changeIcon stops here
+    Logout(){
+      this.$router.push("/");
+    },
+    show(){ // cette fonction va afficher appbar footer et drawer si la page n'est pas login
+      if(this.$route.name !="Login"){
+        this.login = true;
+      }
+    }
+    //showEverything(){
+    //  this.login=true;
+    //  localStorage.setItem(this.login, true)
+    //}
 
+  },
+  beforeMount(){
+    this.show();
+    this.changeIcon(this.$route.name);
+  },
+  watch:{
+    '$route': 'show',
   },
 };
 </script>

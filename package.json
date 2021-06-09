@@ -5,7 +5,7 @@
   "author": "Hichem Aitouakli <alterhi99@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --open --config  build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
@@ -14,6 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@mongodb-js/charts-embed-dom": "^2.0.1",
     "accesscontrol": "^2.2.1",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
@@ -23,18 +24,24 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "material-design-icons-iconfont": "^6.1.0",
     "mongoose": "^5.12.10",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "nodemailer": "^6.6.1",
     "path": "^0.12.7",
+    "primeicons": "^4.1.0",
+    "sweetalert2": "^11.0.16",
     "vee-validate": "^3.4.5",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-virtual-table": "^0.2.19",
     "vuelidate": "^0.7.6",
-    "vuetify": "^2.4.11"
+    "vuetify": "^2.4.11",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "*"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -81,7 +88,7 @@
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "ora": "^1.2.0",
+    "ora": "^1.4.0",
     "phantomjs-prebuilt": "^2.1.14",
     "portfinder": "^1.0.13",
     "postcss-import": "^11.0.0",
