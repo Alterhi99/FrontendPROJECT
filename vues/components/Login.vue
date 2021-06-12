@@ -188,10 +188,11 @@ export default {
         const kek = {Email:this.input.Email, password: this.input.password};
         console.log(kek);
         axios.post('http://localhost:3000/login',kek).then(response => {
-          localStorage.setItem('jwtToken', response.data.token);
+          localStorage.setItem('jwtToken', response.data.accessToken);
+          console.log(response.data.accessToken);
           this.$emit("login");
           this.$store.commit("setAuthentification",true);
-          this.$router.replace({name: 'Dashboard'})
+          this.$router.replace({name: 'home'})
         }).catch(e => {
           console.log(e)
           this.errors.push(e)

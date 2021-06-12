@@ -1,9 +1,4 @@
 /*
-
-DIGITAL TREND
-
-https://templatemo.com/tm-538-digital-trend
-
 */
 
   @font-face {
@@ -22,15 +17,9 @@ https://templatemo.com/tm-538-digital-trend
       font-style: normal;
   }
 
-  @font-face {
-      font-family: 'Tw Cen MT';
-      src: url('../fonts/Tw Cen MT.woff2') format('woff2'),
-          url('../fonts/Tw Cen MT.woff') format('woff');
-      font-weight: bold;
-      font-style: normal;
-  }
 
-  :root {
+
+  .root {
     --primary-color:        #057a8d;
     --secondary-color:      #f1c111;
     --white-color:          #ffffff;
@@ -227,6 +216,7 @@ https://templatemo.com/tm-538-digital-trend
     right: 0;
     left: 0;
     padding: 1.5em;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
   }
 
   .navbar-brand {
@@ -683,5 +673,8 @@ text-align: center;
 
     .footer-link li {
       margin-left: 0;
+    }
+    .companies>*{
+      margin:auto;
     }
   }

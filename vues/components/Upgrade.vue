@@ -1,5 +1,6 @@
 <template>
-<v-layout>
+<v-layout row wrap>
+  <v-flex xl>
   <div id="up">
     <v-btn style="background-color:#FFC600" @click="enableTable" v-on:click="$emit(td)">
       View list
@@ -41,6 +42,11 @@
               </v-card>
             </v-dialog>
             <v-spacer/><v-spacer/><v-spacer/><v-spacer/><v-spacer/>
+            <vue-json-to-csv :json-data="recruiters" :csv-title="'Users'">
+                <v-btn color="success" class="mr-6">
+                  Export <i class="mdi mdi-export-variant" aria-hidden="true"></i>
+                </v-btn>
+             </vue-json-to-csv>
             <v-row>
               <v-col>
                 <v-text-field outlined dense v-model='search'
@@ -98,6 +104,7 @@
     </form>
   </validation-observer>
   </v-layout>
+</v-flex>
 </v-layout>
 </template>
 
@@ -118,7 +125,7 @@ import {
   setInteractionMode
 } from 'vee-validate';
 import axios from 'axios';
-
+import VueJsonToCsv from 'vue-json-to-csv';
 
 /* eslint-disable */
 setInteractionMode('eager');
@@ -157,6 +164,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    VueJsonToCsv
   },
   data: () => ({
     td: false,

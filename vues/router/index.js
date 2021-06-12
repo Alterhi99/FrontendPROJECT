@@ -5,6 +5,9 @@ import Joboffer from '@/components/Joboffer';
 import Profile from '@/components/Profile';
 import Upgrade from '@/components/Upgrade';
 import Login from '@/components/Login';
+import Home from '@/components/pages/home';
+import Contact from '@/components/pages/contact';
+import Offers from '@/components/pages/offer';
 import store from '@/store/store';
 
 Vue.use(Router);
@@ -14,8 +17,23 @@ export default new Router({
     {
       path:"/",
       redirect:{
-        name:"Login",
+        name:"home",
       }
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: Home,
+    },
+    {
+        path: '/Offers',
+        name: 'Offers',
+        component: Offers,
+    },
+    {
+        path: '/Contact',
+        name: 'Contact',
+        component: Contact,
     },
     {
         path: '/login',

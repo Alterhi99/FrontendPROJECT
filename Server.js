@@ -1,4 +1,5 @@
 const express = require('express');
+const expressListRoutes = require('express-list-routes');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -22,6 +23,7 @@ mongoose
  .connect('mongodb://localhost:27017/Application',{ useUnifiedTopology: true , useNewUrlParser: true })
  .then(() => {
   console.log('Connected to the Database successfully');
+  expressListRoutes(app, { prefix: '/api' });
  });
 
 app.use(bodyParser.urlencoded({ extended: true }));//obsolète

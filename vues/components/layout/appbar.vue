@@ -1,20 +1,42 @@
 <template>
 <!-- eslint-disable max-len -->
-<v-app id="inspire">
-  <div v-if="!admin" fluid >
-    <router-view />
-  </div>
-  <v-main v-else>
-    <v-container fluid>
-      <div id="app">
-        <router-view />
-      </div>
-    </v-container>
-  </v-main>
-  <v-footer v-if="admin" color="#FFC600" app :hidden="!login">
-    <span style="color:#1A1A1A;font-weight:bold">&copy;Job Hunt™ 2021</span>
-  </v-footer>
-</v-app>
+
+  <v-app-bar fixed app class="topbar" :src="barImage" :hidden="!login">
+    <v-icon style="color:#1A1A1A">{{titleIcon}}</v-icon>&nbsp;&nbsp;
+    <v-toolbar-title style="color:#1A1A1A" v-text="this.$route.name"></v-toolbar-title>
+    <v-spacer></v-spacer>
+    <div>
+      <v-menu bottom offset-y offset-x>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon style="color:#1A1A1A">mdi-calendar</v-icon>
+          </v-btn>
+        </template>
+        <calcomp />
+      </v-menu>
+    </div>
+    <div class="text-center">
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn outlined style="color:#1A1A1A;"  v-bind="attrs" v-on="on">
+            Admin
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="(item, index) in items" :key="index">
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+
+          </v-list-item>
+          <v-list-item>
+             <v-list-item-content>
+              <v-list-item-action @click="Logout">Sign out</v-list-item-action>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
+  </v-app-bar>
+
 </template>
 
 <script>
@@ -25,7 +47,6 @@ import calcomp from './components/subcomponents/calendar';
 // eslint-disable-next-line
 export default { //import { mdiCogs } from '@mdi/js';
   data: () => ({
-    admin: false,
     barImage: 'https://i.pinimg.com/564x/e8/29/fd/e829fd11f548737c67fa74f4b064fdd8.jpg',
     drawer: null,
     logo: foot1,
