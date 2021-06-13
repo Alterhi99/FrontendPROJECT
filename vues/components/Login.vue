@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-05-27T22:21:35+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T16:39:24+01:00
+-->
 <style>
   @import '../assets/stylesheets/login.css';
 </style>
@@ -197,6 +205,7 @@ export default {
           this.$store.commit("setRole",response.data.data.role)
           console.log(response.data.data.Nom);
           console.log(response.data.data.Email);
+          console.log(response.data.data.role);
           console.log(response.data);
           this.$router.replace({name: 'home'})
         }).catch(e => {

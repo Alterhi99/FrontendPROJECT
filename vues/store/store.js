@@ -1,3 +1,11 @@
+/**
+ * @Author: Hichem Aitouakli <Hayden>
+ * @Date:   2021-06-02T17:48:18+01:00
+ * @Email:  alterhichem99@gmail.com
+ * @Project: Jobhunt
+ * @Last modified by:   Hayden
+ * @Last modified time: 2021-06-13T16:37:07+01:00
+ */
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';

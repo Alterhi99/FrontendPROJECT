@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-05-13T19:43:13+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T16:36:49+01:00
+-->
 <template>
 <!-- eslint-disable max-len -->
 <v-app id="inspire">

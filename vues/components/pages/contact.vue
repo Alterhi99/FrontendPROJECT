@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-06-09T22:06:53+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T16:38:46+01:00
+-->
 <!-- eslint-disable -->
 <style scoped>
 @import './css/index.css';
@@ -10,7 +18,6 @@
 </style>
 <template>
   <v-container class="root pa-0 ma-0">
-
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <router-link v-bind:to="{ name: 'home' }" class="navbar-brand" href="home">
@@ -29,7 +36,7 @@
                         <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Jobseeker</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link font-weight-bold" active-class="active">Recuiter</router-link>
+                        <router-link  v-bind:to="{ name: 'Offers' }" class="nav-link font-weight-bold" active-class="active">Recruiter</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link font-weight-bold" active-class="active">Contact</router-link>
@@ -84,19 +91,19 @@
                       <form action="#" method="post" class="contact-form" data-aos="fade-up" data-aos-delay="300" role="form">
                         <div class="row">
                           <div class="col-lg-6 col-12">
-                            <input type="text" class="form-control" name="name" placeholder="Name">
+                            <input type="text" class="form-control border border-primary" name="name" placeholder="Name">
                           </div>
 
                           <div class="col-lg-6 col-12">
-                            <input type="email" class="form-control" name="email" placeholder="Email">
+                            <input type="email" class="form-control border border-primary" name="email" placeholder="Email">
                           </div>
 
                           <div class="col-lg-12 col-12">
-                            <textarea class="form-control" rows="6" name="message" placeholder="Message"></textarea>
+                            <textarea class="form-control border border-primary" rows="6" name="message" placeholder="Message"></textarea>
                           </div>
 
                           <div class="col-lg-5 mx-auto col-7">
-                            <button type="submit" class="form-control" id="submit-button" name="submit">Send Message</button>
+                            <button type="submit" class="form-control border border-primary" id="submit-button" name="submit">Send Message</button>
                           </div>
                         </div>
 

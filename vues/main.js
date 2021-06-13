@@ -1,3 +1,11 @@
+/**
+ * @Author: Hichem Aitouakli <Hayden>
+ * @Date:   2021-05-13T19:43:13+01:00
+ * @Email:  alterhichem99@gmail.com
+ * @Project: Jobhunt
+ * @Last modified by:   Hayden
+ * @Last modified time: 2021-06-13T18:14:04+01:00
+ */
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 // import Calendar from './components/subcomponents/calendar';

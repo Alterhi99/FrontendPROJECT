@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-06-12T13:13:49+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T19:34:38+01:00
+-->
 <!-- eslint-disable -->
 <style scoped>
 @import './css/index.css';
@@ -29,14 +37,35 @@
                         <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Jobseeker</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link font-weight-bold" active-class="active">Recuiter</router-link>
+                        <router-link  v-bind:to="{ name: 'Offers' }" class="nav-link font-weight-bold" active-class="active">Recruiter</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link font-weight-bold" active-class="active">Contact</router-link>
                     </li>
 
                     <li class="nav-item">
-                        <router-link v-bind:to="{ name: 'Login' }" class="nav-link contact font-weight-bold" active-class="active">Sign Up/Log In</router-link>
+                        <router-link v-if="!login" v-bind:to="{ name: 'Login' }" class="nav-link contact font-weight-bold" active-class="active">Sign Up/Log In</router-link>
+                        <div v-else class="pl-10 text-center">
+                          <v-menu offset-y>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-btn icon outlined style="color:white;"  v-bind="attrs" v-on="on">
+                                <v-avatar>
+                                <span class="white--text text-h5">  {{ user.initials }}</span>
+                              </v-avatar>
+                              </v-btn>
+                            </template>
+                            <v-list>
+                              <v-list-item link v-for="(item, index) in items" :key="index">
+                                <v-list-item-title>{{ item.title }}</v-list-item-title>
+                              </v-list-item>
+                              <v-list-item link>
+                                 <v-list-item-content>
+                                  <v-list-item-action @click="Logout">Sign out</v-list-item-action>
+                                </v-list-item-content>
+                              </v-list-item>
+                            </v-list>
+                          </v-menu>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -59,6 +88,9 @@
           <v-tab class="font-weight-bold">
             Add offers
           </v-tab>
+          <v-tab-item>
+            <jobform Data-aos="fade-up" data-aos-delay="300"></jobform>
+          </v-tab-item>
         </v-tabs>
      </template>
    </div>
@@ -134,6 +166,7 @@ import logo from './images/logo.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import joblist from '../subcomponents/joblist';
+import jobform from '../subcomponents/jobform';
 
      export default {
        data() {
@@ -142,20 +175,47 @@ import joblist from '../subcomponents/joblist';
            number: 4,
            logoimg: logo,
            tab: null,
-           items: ['View offers','Add offers'],
+           login: false,
+           user: {
+            fullName: '',
+            initials: '' ,
+            email: '',
+           },
+           items: [{ // eslint-disable-next-line
+             title: 'Profile'
+           }, { // eslint-disable-next-line
+             title: 'Settings'
+           }],
 
          };
        },
        components:{
          joblist,
+         jobform,
        },
        methods: {
          reply()  {
            this.message = "I'm doing great. Thank You!";
          },
+         Logout(){
+           this.$store.commit("setAuthentification",false);
+           this.$store.commit("setName",'');
+           this.$store.commit("setEmail",'');
+           this.$router.go();
+         },
        },
        created(){
          AOS.init();
+         this.login = this.$store.getters.getAuth;
+         this.user.email = this.$store.getters.getEmail;
+         this.user.fullName = this.$store.getters.getName;
+         console.log(this.$store.getters.getAuth);
+         console.log(this.$store.getters.getEmail);
+         console.log(this.$store.getters.getName);
+         this.user.initials = this.user.fullName.charAt(0).toUpperCase();
+         console.log(this.user.initials);
+         console.log(this.user.fullName);
+         console.log(this.user.email);
        },
      };
   </script>

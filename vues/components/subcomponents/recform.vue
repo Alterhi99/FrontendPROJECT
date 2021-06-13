@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-05-25T19:32:04+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T16:43:59+01:00
+-->
 <!--  /* eslint-disable */ -->
 <!-- eslint-disable max-len -->
 <template>

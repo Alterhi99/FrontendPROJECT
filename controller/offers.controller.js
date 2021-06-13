@@ -4,16 +4,13 @@ const Offer= require('../model/offer.model');
 //add offer
 exports.Addoffer = async (req, res, next) => {
  try {
-  const { NumOffre, IntituleOffre ,Datedebut, DateFin ,Lieu, Description,role} = req.body
+  const {IntituleOffre ,Datedebut, DateFin ,Lieu, Description} = req.body
   const newOffer = new Offer({
-    NumOffre,
     IntituleOffre,
     Datedebut,
     DateFin,
     Lieu,
     Description,
-    role: role
-
   });
 //Testing role
 

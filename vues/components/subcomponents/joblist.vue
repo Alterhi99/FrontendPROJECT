@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-06-03T21:13:00+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T16:39:09+01:00
+-->
 <template>
   <v-container fluid >
     <v-data-iterator
@@ -175,6 +183,9 @@
   </v-container>
 </template>
 <script>
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
 export default {
   data() {
     return {
@@ -193,76 +204,7 @@ export default {
         'Description',
       ],
       items: [
-        {
-          IntituleOffre: 'Web dev',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Web designer',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Project manager',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Data scientist',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'System admin',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Electrician',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Janitor',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Delivery',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Security manager',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
-        {
-          IntituleOffre: 'Translater',
-          From: '12/06/2021',
-          To: '12/06/2022',
-          Address: 'bejaia',
-          Description: 'Lorem ipsum dolor sit amet,',
-        },
+
       ],
     };
   },
@@ -284,6 +226,11 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+  },
+  created(){
+    axios.get('http://localhost:3000/offers').then(resp => {
+    console.log(resp.data);
+    });
   },
 };
 </script>

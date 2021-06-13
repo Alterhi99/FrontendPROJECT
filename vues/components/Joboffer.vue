@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-05-15T21:13:07+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T16:40:45+01:00
+-->
 <template><!--/* eslint-disable */--> <!-- eslint-disable max-len -->
 <v-layout flex wrap>
   <div id="up">

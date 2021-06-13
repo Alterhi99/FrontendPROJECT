@@ -1,3 +1,11 @@
+<!--
+@Author: Hichem Aitouakli <Hayden>
+@Date:   2021-05-19T18:44:33+01:00
+@Email:  alterhichem99@gmail.com
+@Project: Jobhunt
+@Last modified by:   Hayden
+@Last modified time: 2021-06-13T16:44:14+01:00
+-->
 <template id="calendar"><!-- eslint-disable -->
 <v-row class="fill-height">
   <v-col>

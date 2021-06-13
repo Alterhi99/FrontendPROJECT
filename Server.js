@@ -1,6 +1,7 @@
 const express = require('express');
 const expressListRoutes = require('express-list-routes');
 const mongoose = require('mongoose');
+const AutoIncrementFactory = require('mongoose-sequence');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const path = require('path')
@@ -25,7 +26,7 @@ mongoose
   console.log('Connected to the Database successfully');
   expressListRoutes(app, { prefix: '/api' });
  });
-
+const AutoIncrement = AutoIncrementFactory(mongoose);
 app.use(bodyParser.urlencoded({ extended: true }));//obsolète
 app.use(bodyParser.json());
 

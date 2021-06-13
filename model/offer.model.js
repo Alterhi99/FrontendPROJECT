@@ -1,12 +1,23 @@
-const mongoose = require('mongoose')
+/**
+ * @Author: Hichem Aitouakli <Hayden>
+ * @Date:   2021-06-02T23:28:52+01:00
+ * @Email:  alterhichem99@gmail.com
+ * @Project: Jobhunt
+ * @Last modified by:   Hayden
+ * @Last modified time: 2021-06-13T21:51:54+01:00
+ */
+
+
+
+const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema  = mongoose.Schema;
 
 
-const OffreEmploiShema= new mongoose.Schema ({
+OffreEmploiShema= new mongoose.Schema ({
 
   NumOffre: {
     type : Number,
-
   },
   IntituleOffre : {
     type: String,
@@ -29,12 +40,13 @@ const OffreEmploiShema= new mongoose.Schema ({
   },
    role: {
     type: String,
-    default: 'admin',
-    enum: [ "Recuiter", "admin"]
+    default: 'Recruiter',
+    enum: [ "Recruiter", "admin"]
    }
 
 }) ;
-
+OffreEmploiShema.plugin(AutoIncrement, {inc_field: 'NumOffre'});
 //creer un model
 const OffreEmploiModel= mongoose.model('OffreEmploi',OffreEmploiShema);
+
 module.exports =  OffreEmploiModel;

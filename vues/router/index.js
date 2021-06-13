@@ -1,3 +1,11 @@
+/**
+ * @Author: Hichem Aitouakli <Hayden>
+ * @Date:   2021-05-13T19:43:13+01:00
+ * @Email:  alterhichem99@gmail.com
+ * @Project: Jobhunt
+ * @Last modified by:   Hayden
+ * @Last modified time: 2021-06-13T16:37:28+01:00
+ */
 import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from '@/components/Dashboard';
@@ -29,6 +37,13 @@ export default new Router({
         path: '/Offers',
         name: 'Offers',
         component: Offers,
+        beforeEnter:(to, from, next) =>{
+          if((store.state.auth == true)&& (store.state.role="Jobseeker")){
+            next();
+          }else{
+            next("/home");
+          }
+        }
     },
     {
         path: '/Contact',
