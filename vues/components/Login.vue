@@ -192,6 +192,12 @@ export default {
           console.log(response.data.accessToken);
           this.$emit("login");
           this.$store.commit("setAuthentification",true);
+          this.$store.commit("setName",response.data.data.Nom);
+          this.$store.commit("setEmail",response.data.data.Email);
+          this.$store.commit("setRole",response.data.data.role)
+          console.log(response.data.data.Nom);
+          console.log(response.data.data.Email);
+          console.log(response.data);
           this.$router.replace({name: 'home'})
         }).catch(e => {
           console.log(e)

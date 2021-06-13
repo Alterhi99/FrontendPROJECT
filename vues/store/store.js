@@ -9,7 +9,8 @@ export default new Vuex.Store({
     state: {
         auth: false,
         role: "",
-        anyotherproperty:""
+        name:"",
+        email:"",
     },
     getters: {
         getRole: state => {
@@ -18,10 +19,17 @@ export default new Vuex.Store({
         getAuth: state => {
             return state.auth;
         },
+        getName: state => {
+            return state.name;
+        },
+        getEmail: state => {
+            return state.email;
+        },
+
     },
     plugins: [
         createPersistedState({
-            paths: ['auth', 'role'],
+            paths: ['auth', 'role', 'name', 'email'],
             storage: {
                 getItem: (key) => Cookies.get(key),
                 setItem: (key, value) =>
@@ -34,7 +42,16 @@ export default new Vuex.Store({
         //mutation will change the states like auth and role
         setAuthentification(state,status){
            state.auth = status;
-        }
+        },
+        setRole(state,status){
+          state.role = status;
+        },
+        setName(state,status){
+          state.name = status;
+        },
+        setEmail(state,status){
+          state.email = status;
+        },
     },
     actions: { //your actions which commit a mutation
     }

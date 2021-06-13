@@ -67,7 +67,7 @@ exports.login = async (req, res, next) => {
   });
   await User.findByIdAndUpdate(user._id, { accessToken })
   res.status(200).json({
-   data: { Email: user.Email, role: user.role },
+   data: { Nom:user.Nom,Email: user.Email, role: user.role },
    accessToken
   })
  } catch (error) {

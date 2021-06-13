@@ -39,6 +39,13 @@ export default new Router({
         path: '/login',
         name: 'Login',
         component: Login,
+        beforeEnter:(to, from, next) =>{
+          if(store.state.auth == true){
+            next("/home");
+          }else{
+            next();
+          }
+        }
     },
     {
       path: '/Dashboard',

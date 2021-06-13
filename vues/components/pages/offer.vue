@@ -23,20 +23,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <router-link v-bind:to="{ name: 'home' }" class="nav-link smoothScroll" active-class="active">Home</router-link>
+                        <router-link v-bind:to="{ name: 'home' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll" active-class="active">Jobseeker</router-link>
+                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Jobseeker</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link" active-class="active">Recuiter</router-link>
+                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link font-weight-bold" active-class="active">Recuiter</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link" active-class="active">Contact</router-link>
+                        <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link font-weight-bold" active-class="active">Contact</router-link>
                     </li>
 
                     <li class="nav-item">
-                        <router-link v-bind:to="{ name: 'Login' }" class="nav-link contact" active-class="active">Sign Up/Log In</router-link>
+                        <router-link v-bind:to="{ name: 'Login' }" class="nav-link contact font-weight-bold" active-class="active">Sign Up/Log In</router-link>
                     </li>
                 </ul>
             </div>
@@ -45,7 +45,23 @@
 
 
      <!-- OFFERS -->
-<joblist/>
+   <div class="justify-content-center">
+     <h1 class="mb-5 text-center" data-aos="fade-up"> Manage your <strong>offers</strong></h1>
+     <template >
+        <v-tabs class="mb-5 text-center" align-with-title>
+          <v-tabs-slider color="yellow"></v-tabs-slider>
+          <v-tab class="font-weight-bold">
+            View offers
+          </v-tab>
+          <v-tab-item>
+            <joblist Data-aos="fade-up" data-aos-delay="300"></joblist>
+          </v-tab-item>
+          <v-tab class="font-weight-bold">
+            Add offers
+          </v-tab>
+        </v-tabs>
+     </template>
+   </div>
 
 <!--footer-->
 
@@ -114,7 +130,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
      <!-- SCRIPTS -->
 
 <script> /* eslint-disable */
-
+import logo from './images/logo.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import joblist from '../subcomponents/joblist';
@@ -125,15 +141,9 @@ import joblist from '../subcomponents/joblist';
            message: 'Hello there, how are you this morning?',
            number: 4,
            logoimg: logo,
-           teamimg: team,
-           workimg: work,
-           imgA: a,
-           imgB: b,
-           imgC: c,
-           imgD: d,
-           imgE: e,
-           imgF: f,
-           imgG: g,
+           tab: null,
+           items: ['View offers','Add offers'],
+
          };
        },
        components:{

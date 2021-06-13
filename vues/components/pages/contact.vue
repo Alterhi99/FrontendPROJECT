@@ -23,20 +23,41 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <router-link v-bind:to="{ name: 'home' }" class="nav-link smoothScroll" active-class="active">Home</router-link>
+                        <router-link v-bind:to="{ name: 'home' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll" active-class="active">Jobseeker</router-link>
+                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Jobseeker</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link" active-class="active">Recuiter</router-link>
+                        <router-link  v-bind:to="{ name: 'Login' }" class="nav-link font-weight-bold" active-class="active">Recuiter</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link" active-class="active">Contact</router-link>
+                        <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link font-weight-bold" active-class="active">Contact</router-link>
                     </li>
 
                     <li class="nav-item">
-                        <router-link v-bind:to="{ name: 'Login' }" class="nav-link contact">Sign Up/Log In</router-link>
+                        <router-link v-if="login != true" v-bind:to="{ name: 'Login' }" class="nav-link contact font-weight-bold">Sign Up/Log In</router-link>
+                        <div v-else class="pl-10 text-center">
+                          <v-menu offset-y>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-btn icon outlined style="color:white;"  v-bind="attrs" v-on="on">
+                                <v-avatar>
+                                <span class="white--text text-h5">  {{ user.initials }}</span>
+                              </v-avatar>
+                              </v-btn>
+                            </template>
+                            <v-list>
+                              <v-list-item link v-for="(item, index) in items" :key="index">
+                                <v-list-item-title>{{ item.title }}</v-list-item-title>
+                              </v-list-item>
+                              <v-list-item link>
+                                 <v-list-item-content>
+                                  <v-list-item-action @click="Logout">Sign out</v-list-item-action>
+                                </v-list-item-content>
+                              </v-list-item>
+                            </v-list>
+                          </v-menu>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -179,15 +200,42 @@
                 imgE: e,
                 imgF: f,
                 imgG: g,
+                login: false,
+                user: {
+                 fullName: '',
+                 initials: '' ,
+                 email: '',
+                },
+                items: [{ // eslint-disable-next-line
+                  title: 'Profile'
+                }, { // eslint-disable-next-line
+                  title: 'Settings'
+                }],
               };
             },
             methods: {
               reply()  {
                 this.message = "I'm doing great. Thank You!";
               },
+              Logout(){
+                this.$store.commit("setAuthentification",false);
+                this.$store.commit("setName",'');
+                this.$store.commit("setEmail",'');
+                this.$router.go();
+              },
             },
             created(){
               AOS.init();
+              this.login = this.$store.getters.getAuth;
+              this.user.email = this.$store.getters.getEmail;
+              this.user.fullName = this.$store.getters.getName;
+              console.log(this.$store.getters.getAuth);
+              console.log(this.$store.getters.getEmail);
+              console.log(this.$store.getters.getName);
+              this.user.initials = this.user.fullName.charAt(0).toUpperCase();
+              console.log(this.user.initials);
+              console.log(this.user.fullName);
+              console.log(this.user.email);
             },
           };
 </script>

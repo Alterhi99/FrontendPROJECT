@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid >
     <v-data-iterator
       :items="items"
       :items-per-page.sync="itemsPerPage"
@@ -8,13 +8,10 @@
       :sort-by="sortBy.toLowerCase()"
       :sort-desc="sortDesc"
       hide-default-footer
-      dark
     >
       <template v-slot:header>
         <v-toolbar
-          dark
-          color="#1A1A1A"
-          class="mb-1"
+          class="mb-1 border border-primary"
         >
           <v-text-field
             v-model="search"
@@ -33,7 +30,7 @@
               solo-inverted
               hide-details
               :items="keys"
-              prepend-inner-icon="mdi-magnify"
+              prepend-inner-icon="mdi-arrow-up"
               label="Sort by"
             ></v-select>
             <v-spacer></v-spacer>
@@ -44,7 +41,7 @@
               <v-btn
                 large
                 depressed
-                color="#1A1A1A"
+                color="#FFC600"
                 :value="false"
               >
                 <v-icon>mdi-arrow-up</v-icon>
@@ -52,7 +49,7 @@
               <v-btn
                 large
                 depressed
-                color="#1A1A1A"
+                color="#FFC600"
                 :value="true"
               >
                 <v-icon>mdi-arrow-down</v-icon>
@@ -66,15 +63,15 @@
         <v-row>
           <v-col
             v-for="item in props.items"
-            :key="item.name"
+            :key="item.IntituleOffre"
             cols="12"
             sm="6"
             md="4"
             lg="3"
           >
-            <v-card>
+            <v-card class="border border-primary">
               <v-card-title class="subheading font-weight-bold">
-                {{ item.name }}
+                {{ item.IntituleOffre }}
               </v-card-title>
 
               <v-divider></v-divider>
@@ -91,9 +88,21 @@
                     class="align-end"
                     :class="{ 'blue--text': sortBy === key }"
                   >
-                    {{ item[key.toLowerCase()] }}
+                    {{ item[key] }}
                   </v-list-item-content>
+
                 </v-list-item>
+                <div class="d-flex justify-content-center">
+                       <v-btn
+                       color="#FFC600"
+                       :value="true"
+                       >Edit</v-btn>
+                       <v-btn
+                       color="#1A1A1A"
+                       style="color:white;"
+                       :value="true"
+                       >Delete</v-btn>
+              </div>
               </v-list>
             </v-card>
           </v-col>
@@ -106,16 +115,15 @@
           align="center"
           justify="center"
         >
-          <span class="grey--text">Items per page</span>
+          <span class="dark--text">Items per page</span>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                dark
                 text
-                color="#1A1A1A"
                 class="ml-2"
                 v-bind="attrs"
                 v-on="on"
+                color="#1A1A1A"
               >
                 {{ itemsPerPage }}
                 <v-icon>mdi-chevron-down</v-icon>
@@ -134,17 +142,13 @@
 
           <v-spacer></v-spacer>
 
-          <span
-            class="mr-4
-            grey--text"
-          >
-            Page {{ page }} of {{ numberOfPages }}
-          </span>
+
           <v-btn
             fab
             dark
-            color="blue darken-3"
-            class="mr-1"
+            color="#FFC600"
+            style="color:black;"
+            class="mr-1 border border-dark"
             @click="formerPage"
           >
             <v-icon>mdi-chevron-left</v-icon>
@@ -152,12 +156,19 @@
           <v-btn
             fab
             dark
-            color="blue darken-3"
-            class="ml-1"
+            style="color:black;"
+            color="#FFC600"
+            class="ml-1 border border-dark"
             @click="nextPage"
           >
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
+          <span
+            class="mr-4
+            dark--text"
+          >
+            Page {{ page }} of {{ numberOfPages }}
+          </span>
         </v-row>
       </template>
     </v-data-iterator>
@@ -172,118 +183,85 @@ export default {
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
-      sortBy: 'name',
+      itemsPerPage: 8,
+      sortBy: 'IntituleOffre',
       keys: [
-        'Number',
-        'Calories',
-        'Fat',
-        'Carbs',
-        'Protein',
-        'Sodium',
-        'Calcium',
-        'Iron',
+        'Offer Number',
+        'From',
+        'To',
+        'Address',
+        'Description',
       ],
       items: [
         {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: '14%',
-          iron: '1%',
+          IntituleOffre: 'Web dev',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          sodium: 129,
-          calcium: '8%',
-          iron: '1%',
+          IntituleOffre: 'Web designer',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          sodium: 337,
-          calcium: '6%',
-          iron: '7%',
+          IntituleOffre: 'Project manager',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          sodium: 413,
-          calcium: '3%',
-          iron: '8%',
+          IntituleOffre: 'Data scientist',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          sodium: 327,
-          calcium: '7%',
-          iron: '16%',
+          IntituleOffre: 'System admin',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          sodium: 50,
-          calcium: '0%',
-          iron: '0%',
+          IntituleOffre: 'Electrician',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          sodium: 38,
-          calcium: '0%',
-          iron: '2%',
+          IntituleOffre: 'Janitor',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          sodium: 562,
-          calcium: '0%',
-          iron: '45%',
+          IntituleOffre: 'Delivery',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          sodium: 326,
-          calcium: '2%',
-          iron: '22%',
+          IntituleOffre: 'Security manager',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          sodium: 54,
-          calcium: '12%',
-          iron: '6%',
+          IntituleOffre: 'Translater',
+          From: '12/06/2021',
+          To: '12/06/2022',
+          Address: 'bejaia',
+          Description: 'Lorem ipsum dolor sit amet,',
         },
       ],
     };
