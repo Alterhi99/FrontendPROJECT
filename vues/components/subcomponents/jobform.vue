@@ -150,16 +150,18 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="blue darken-1"
             text
             @click="this.$router.go()"
+            color="white"
+            background-color="#1A1A1A"
           >
             Close
           </v-btn>
           <v-btn
-            color="blue darken-1"
             text
             @click="addOffer"
+            background-color="#FFC600"
+            color="#1A1A1A"
           >
             Add
           </v-btn>
@@ -172,7 +174,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-export default { // eslint-disable//
+export default { /* eslint-disable */
   data: () => ({
     dialog: false,
     date: new Date().toISOString().substr(0, 10),
@@ -190,17 +192,17 @@ export default { // eslint-disable//
     },
   }),
   methods: {
-    validate() {
+    validate() {     // validate si vide or not mdr dont laugh plz
       const keys = Object.keys(this.input);
       keys.forEach((key, index) => {
         if (this.input[key] !== null && this.input[key] !== '') { return false; }
       });
       return true;
     },
-    addOffer(evt) {
+    addOffer(evt) {   // function to add offer duhhhhhh
       evt.preventDefault();
-      this.input.Datedebut = this.date;
-      this.input.DateFin = this.date2;
+      this.input.Datedebut = this.date.toLocaleDateString();
+      this.input.DateFin = this.date2.toLocaleDateString();
       const kek = JSON.stringify(this.input);
       console.log(kek);
       console.log(this.date);
@@ -219,7 +221,7 @@ export default { // eslint-disable//
             text: 'Offer has been successfully added!',
             type: 'success',
           }).then(function () {
-            this.$router.go();
+            this.$router.go();         // WHY DOESN'T THIS WORRRRRRRRRRRRRRKKKKKKKKKKK AAAAAAAAAAAAAAAAAAAAAAAAAAA
           });
         }).catch((e) => {
           console.log(e);

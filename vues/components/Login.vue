@@ -145,7 +145,7 @@ export default {
       ],
       show1: false,
       rules: {
-         required: value => !!value || 'Required.',
+         required: value => !!value || 'Required.',   // IDK WHAT IS THIS
          emailMatch: () => ('The email and password you entered don\'t match'),
       },
       errors: [],
@@ -175,7 +175,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.loginForm.validate()) {
-        // submit form to server/API here...
+        // submit form to server/API here... or not do what you want lol
       }
     },
     reset() {
@@ -203,7 +203,7 @@ export default {
           this.$store.commit("setName",response.data.data.Nom);
           this.$store.commit("setEmail",response.data.data.Email);
           this.$store.commit("setRole",response.data.data.role)
-          console.log(response.data.data.Nom);
+          console.log(response.data.data.Nom);      // console.log agi LA DOUANE Hhhhhhhhhhhhhhhhhhhhhhhhhhh
           console.log(response.data.data.Email);
           console.log(response.data.data.role);
           console.log(response.data);
@@ -218,7 +218,7 @@ export default {
     signUpSubmit (evt) {
       evt.preventDefault()
       const kek = JSON.stringify(this.input);
-      console.log(kek);
+      console.log(kek);                   // top kek
       if(this.$refs.observer.validate()){
         axios.post('http://localhost:3000/signup',
         {

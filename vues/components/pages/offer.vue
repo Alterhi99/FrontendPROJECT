@@ -171,7 +171,6 @@ import jobform from '../subcomponents/jobform';
      export default {
        data() {
          return {
-           message: 'Hello there, how are you this morning?',
            number: 4,
            logoimg: logo,
            tab: null,

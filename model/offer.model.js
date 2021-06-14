@@ -18,6 +18,8 @@ OffreEmploiShema= new mongoose.Schema ({
 
   NumOffre: {
     type : Number,
+    unique: true,
+    index: true
   },
   IntituleOffre : {
     type: String,

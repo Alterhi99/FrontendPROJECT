@@ -109,7 +109,8 @@
                        color="#1A1A1A"
                        style="color:white;"
                        :value="true"
-                       >Delete</v-btn>
+                       @click='deleteOffer(item["Offer Number"])'
+                       > Delete</v-btn>
               </div>
               </v-list>
             </v-card>
@@ -184,7 +185,7 @@
 </template>
 <script>
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'; /* eslint-disable */
 
 export default {
   data() {
@@ -223,13 +224,54 @@ export default {
     formerPage() {
       if (this.page - 1 >= 1) this.page -= 1;
     },
-    updateItemsPerPage(number) {
+    updateItemsPerPage(number) {   // for the data iterator
       this.itemsPerPage = number;
     },
+    clone(obj) {            // lol what does this thing do again?
+      return Object.assign({}, obj);
+    },
+    renameKey(object, key, newKey) {  // function to change key names cuz im stupid
+      const clonedObj = this.clone(object);
+      const targetKey = clonedObj[key];
+      delete clonedObj[key];
+      clonedObj[newKey] = targetKey;
+      return clonedObj;
+    },
+    loadData(data) {  //fonction pour charger les offres
+      for (let i = 0; i < data.length; i++) {
+        data[i] = this.renameKey(data[i], 'NumOffre', 'Offer Number');
+        data[i] = this.renameKey(data[i], 'Datedebut', 'From');
+        data[i] = this.renameKey(data[i], 'DateFin', 'To');
+        data[i] = this.renameKey(data[i], 'Lieu', 'Address');
+        delete data[i].role;
+        delete data[i].__v;
+        delete data[i]._id;
+      }
+      this.items = data;
+      console.log(this.items);
+    },
+    deleteOffer(id) {  // fonction pour supprimer offre
+      console.log(id);
+      axios.delete(`http://localhost:3000/deleteOffer/${id}`)
+        .then((response) => {
+          console.log(response);
+          Swal.fire({
+            title: 'Success!',
+            text: response.data.message,
+            type: 'success',
+          }).then(function () {
+            this.$router.go(0);        //this doesn't want to work wtf
+          });
+        }).catch((e) => {
+          console.log(e);
+          this.errors.push(e);
+          Swal.fire('Error!', `${e}`, 'error');
+        });
+    },
   },
-  created(){
-    axios.get('http://localhost:3000/offers').then(resp => {
-    console.log(resp.data);
+  created() {
+    axios.get('http://localhost:3000/getOffers').then((resp) => {
+      this.loadData(resp.data.data);
     });
   },
 };

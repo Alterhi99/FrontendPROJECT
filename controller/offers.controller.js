@@ -36,8 +36,8 @@ exports.getOffer= async (req, res, next) => {
 //Affichage
 exports.getOffers = async (req, res, next) => {
  try {
-  const OffersId = req.params.OffersId;
-  const offers = await Offer.findById(OffersId);
+  const OffersId = req.params.offerID;
+  const offers = await offre.findById(OffersId);
   if (!offers) return next(new Error('User does not exist'));
    res.status(200).json({
    data: offers
@@ -51,8 +51,8 @@ exports.getOffers = async (req, res, next) => {
 exports.updateOffer = async (req, res, next) => {
  try {
   const update = req.body
-  const OffersId = req.params.OffersId;
-  await Offer.findByIdAndUpdate(OffersId, update);
+  const OffersId = req.params.offerId;
+  await Offer.find({"NumOffre":OffersId}).update(update);
   const offer = await Offer.findById(OffersId)
   res.status(200).json({
    data: offer,
@@ -65,13 +65,16 @@ exports.updateOffer = async (req, res, next) => {
 //Delete offer
 exports.deleteOffer = async (req, res, next) => {
  try {
-  const OffersId = req.params.OffersId;
-  await Offer.findByIdAndDelete(OffersId);
+  console.log(req.params);
+  const OffersId = req.params.offerID;
+  console.log("deleting offer number "+OffersId);
+  await Offer.find({"NumOffre":OffersId}).remove();
   res.status(200).json({
    data: null,
    message: 'Offer has been deleted'
   });
  } catch (error) {
+  res.status(500);
   next(error)
  }
 }
