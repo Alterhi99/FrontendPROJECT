@@ -8,7 +8,6 @@
 -->
 <template>
 <!-- eslint-disable max-len -->
-<v-app id="inspire">
   <v-navigation-drawer color="#1A1A1A" fixed v-model="drawer" permanent :mini-variant.sync="drawer" app :src='barImage' :hidden="!login">
     <v-btn absolute right fab @click="drawer = !drawer" :style="{color:white,top: '50%', transform:'translate(75%, -50%)'}">
       <v-icon v-if="drawer">mdi-chevron-right</v-icon>
@@ -109,7 +108,6 @@
   <v-footer color="#FFC600" app :hidden="!login">
     <span style="color:#1A1A1A;font-weight:bold">&copy;Job Hunt™ 2021</span>
   </v-footer>
-</v-app>
 </template>
 
 <script>

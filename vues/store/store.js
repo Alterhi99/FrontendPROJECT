@@ -16,6 +16,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         auth: false,
+        token:"",
         role: "",
         name:"",
         email:"",
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     getters: {
         getRole: state => {
             return state.role;
+        },
+        getToken: state =>{
+           return state.token;
         },
         getAuth: state => {
             return state.auth;
@@ -37,7 +41,7 @@ export default new Vuex.Store({
     },
     plugins: [
         createPersistedState({
-            paths: ['auth', 'role', 'name', 'email'],
+            paths: ['auth',"token" ,'role', 'name', 'email'],
             storage: {
                 getItem: (key) => Cookies.get(key),
                 setItem: (key, value) =>
@@ -50,6 +54,9 @@ export default new Vuex.Store({
         //mutation will change the states like auth and role
         setAuthentification(state,status){
            state.auth = status;
+        },
+        setToken(state,status){
+          state.token = status;
         },
         setRole(state,status){
           state.role = status;

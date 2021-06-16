@@ -62,7 +62,7 @@ exports.deleteUser = async (req, res, next) => {
 
 // middleware
 
-// Add this to the top of the file
+// Roles
 const { roles } = require('../Role')
 
 exports.grantAccess = function(action, resource) {

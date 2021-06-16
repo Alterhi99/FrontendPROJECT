@@ -175,7 +175,7 @@ import Swal from 'sweetalert2';
 export default { /* eslint-disable */
   data: () => ({
     dialog: false,
-    date: new Date().toISOString().substr(0, 10),
+    date: new Date().toISOString().substr(0, 10),   // im sorry i wrote this monstrosity
     date2: new Date().toISOString().substr(0, 10),
     menu: false,
     modal: false,
@@ -190,14 +190,14 @@ export default { /* eslint-disable */
     },
   }),
   methods: {
-    validate() {     // validate si vide ou NON
+    validate() {     // validate si vide or not mdr dont laugh plz j'ai la flemme d'utiliser vee-validate
       const keys = Object.keys(this.input);
       keys.forEach((key, index) => {
         if (this.input[key] !== null && this.input[key] !== '') { return false; }
       });
       return true;
     },
-    addOffer(evt) {   // function to add offer
+    addOffer(evt) {   // function to add offer duhhhhhh
       evt.preventDefault();
       this.input.Datedebut = this.date;
       this.input.DateFin = this.date2;
@@ -221,6 +221,7 @@ export default { /* eslint-disable */
           }).then((data) => {
             console.log("time to reload");
             this.emitBack();
+            this.$router.go();         // WHY DOESN'T THIS WORRRRRRRRRRRRRRKKKKKKKKKKK AAAAAAAAAAAAAAAAAAAAAAAAAAA
           });
         }).catch((e) => {
           console.log(e);

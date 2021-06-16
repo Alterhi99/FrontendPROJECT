@@ -71,11 +71,13 @@ exports.login = async (req, res, next) => {
    accessToken
   })
  } catch (error) {
-  next(error)
+    res.status(500).json({
+    error: error
+   });
+   next(error)
  }
 }
 
-// Add this to the top of the file
 const { roles } = require('../Role')
 
 exports.grantAccess = function(action, resource) {

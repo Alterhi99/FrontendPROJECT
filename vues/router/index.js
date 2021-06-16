@@ -67,7 +67,7 @@ export default new Router({
       name: 'Dashboard',
       component: Dashboard,
       beforeEnter:(to, from, next) =>{
-        if(store.state.auth == false){
+        if((store.state.auth == false)&& (store.state.role="admin")){
           next("/login");
         }else{
           next();
@@ -79,7 +79,7 @@ export default new Router({
       name: 'Joboffer',
       component: Joboffer,
       beforeEnter:(to, from, next) =>{
-        if(store.state.auth == false){
+        if((store.state.auth == false)&& (store.state.role="admin")){
           next("/login");
         }else{
           next();
@@ -91,7 +91,7 @@ export default new Router({
       name: 'Profile',
       component: Profile,
       beforeEnter:(to, from, next) =>{
-        if(store.state.auth == false){
+        if((store.state.auth == false)&& (store.state.role="admin")){
           next("/login");
         }else{
           next();
@@ -103,7 +103,7 @@ export default new Router({
       name: 'Upgrade',
       component: Upgrade,
       beforeEnter:(to, from, next) =>{
-        if(store.state.auth == false){
+        if((store.state.auth == false)&& (store.state.role="admin")){
           next("/login");
         }else{
           next();

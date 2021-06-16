@@ -81,7 +81,7 @@ export default {
     return {
       title: "",
       offers:[],
-      headers: [{
+      headers: [{              // FAKE BACKEND
           text: 'Number',
           align: 'start',
           sortable: true,
@@ -139,7 +139,7 @@ export default {
     joblist
   },
   methods: {
-    handleSelectionChange(rows) {
+    handleSelectionChange(rows) {      //usless functions
       console.log(rows)
     },
     edit(index, row) {
@@ -154,19 +154,19 @@ export default {
       }]
     },
 
-    editItem(item) {
+    editItem(item) {           // modifier
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
-    deleteItem(item) {
+    deleteItem(item) {         //supprimer
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
-    deleteItemConfirm() {
+    deleteItemConfirm() {        //confirmation de supprimer
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },

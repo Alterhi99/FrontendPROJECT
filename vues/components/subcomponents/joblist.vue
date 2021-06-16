@@ -6,6 +6,7 @@
 @Last modified by:   Hayden
 @Last modified time: 2021-06-13T16:39:09+01:00
 -->
+<!-- Listes des offres d'emplois (pour recruteur)  -->
 <template>
   <v-container fluid >
     <v-data-iterator
@@ -101,16 +102,39 @@
 
                 </v-list-item>
                 <div class="d-flex justify-content-center">
-                       <v-btn
-                       color="#FFC600"
-                       :value="true"
-                       >Edit</v-btn>
-                       <v-btn
-                       color="#1A1A1A"
-                       style="color:white;"
-                       :value="true"
-                       @click='deleteOffer(item["Offer Number"])'
-                       > Delete</v-btn>
+                  <v-dialog persistent v-model="dialog"
+                  :retain-focus="false" max-width="900px">
+                    <!--  DONT TOUCH RETAIN FOCUS OR CHROME WILL EXPLODE
+                    800 ERRORS IN 10 SECONDS LOOOOLLLL -->
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn color="#FFC600" :value="true" v-bind="attrs"
+                      v-on="on">
+                        Edit
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-title>
+                        <span class="text-h5">Edit Offer</span>
+                      </v-card-title>
+                      <v-card-text>
+
+                      </v-card-text>
+                      <v-btn color="#FFC600" @click='$emit("back")'>
+                        Edit
+                      </v-btn>
+                      <v-btn
+                       color="#1A1A1A" style="color:white;"
+                       @click="dialog = false"
+                       >
+                       Close
+                      </v-btn>
+                    </v-card>
+                  </v-dialog>
+                  <v-btn color="#1A1A1A" style="color:white;"
+                  :value="true"
+                  @click='deleteOffer(item["Offer Number"]);'>
+                   Delete
+                  </v-btn>
               </div>
               </v-list>
             </v-card>
@@ -186,6 +210,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2'; /* eslint-disable */
+import jobformEdit from '../subcomponents/jobformEdit';
 
 export default {
   data() {
@@ -195,6 +220,7 @@ export default {
       filter: {},
       sortDesc: false,
       page: 1,
+      dialog: false,
       itemsPerPage: 8,
       sortBy: 'IntituleOffre',
       keys: [
@@ -208,6 +234,9 @@ export default {
 
       ],
     };
+  },
+  components:{
+    jobformEdit,
   },
   computed: {
     numberOfPages() {
@@ -227,10 +256,10 @@ export default {
     updateItemsPerPage(number) {   // for the data iterator
       this.itemsPerPage = number;
     },
-    clone(obj) {            // lol what does this thing do again?
+    clone(obj) {            // Cloner un objet
       return Object.assign({}, obj);
     },
-    renameKey(object, key, newKey) {  // function to change key names cuz im stupid
+    renameKey(object, key, newKey) {  // function to change key names
       const clonedObj = this.clone(object);
       const targetKey = clonedObj[key];
       delete clonedObj[key];
@@ -260,7 +289,7 @@ export default {
             text: response.data.message,
             type: 'success',
           }).then(function () {
-            this.$router.go(0);        //this doesn't want to work wtf
+            this.emitBack();     //recharger la page
           });
         }).catch((e) => {
           console.log(e);
@@ -268,10 +297,26 @@ export default {
           Swal.fire('Error!', `${e}`, 'error');
         });
     },
+    refreshPage(){
+      this.$forceUpdate();
+    },
+    emitBack(){
+      console.log("emitting");
+      this.$emit('back');
+      this.$root.$emit('reload');
+    }
   },
   created() {
     axios.get('http://localhost:3000/getOffers').then((resp) => {
       this.loadData(resp.data.data);
+    });
+  },
+  mounted(){
+    this.$root.$on('reload', data => {
+        console.log('reloading....');
+        axios.get('http://localhost:3000/getOffers').then((resp) => {
+          this.loadData(resp.data.data);
+        });
     });
   },
 };

@@ -66,13 +66,12 @@
         </div>
         <div class="group">
           <validation-provider v-slot="{ errors }" name="Password" rules="required|max:26">
-            <v-text-field class="input" v-model="password" :counter="26" :error-messages="errors" label="Password" required></v-text-field>
+            <v-text-field type="password" class="input" v-model="password" :counter="26" :error-messages="errors" label="Password" required></v-text-field>
           </validation-provider>
         </div>
         <div class="group">
           <validation-provider v-slot="{ errors }" name="Password2" rules="required|max:26|confirmed:@Password">
-            <v-text-field class="input" v-model="password2" :counter="26" :error-messages="errors" label="Confirm Password" required></v-text-field>
-            </v-text-field>
+            <v-text-field type="password" class="input" v-model="password2" :counter="26" :error-messages="errors" label="Confirm Password" required></v-text-field>
           </validation-provider>
         </div>
         <div class="group">
@@ -111,7 +110,7 @@ import {extend, ValidationObserver, ValidationProvider, setInteractionMode} from
 
 setInteractionMode('eager');
 
-extend('alpha_spaces', {
+extend('alpha_spaces', {             //les messages additionnel lors de la validation
   ...alpha_spaces,
   message: '{_field_} must contain only letters!',
 });
@@ -140,12 +139,12 @@ export default {
       logimg: logox,
       Email: '',
       emailRules: [
-          v => !!v || 'E-mail is required',
+          v => !!v || 'E-mail is required',    //obsolete
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
       show1: false,
       rules: {
-         required: value => !!value || 'Required.',   // IDK WHAT IS THIS
+         required: value => !!value || 'Required.',   // Ceci ne marche pas
          emailMatch: () => ('The email and password you entered don\'t match'),
       },
       errors: [],
@@ -193,21 +192,27 @@ export default {
         this.$router.push({name:'Dashboard'});
       }
       else{
-        const kek = {Email:this.input.Email, password: this.input.password};
-        console.log(kek);
-        axios.post('http://localhost:3000/login',kek).then(response => {
-          localStorage.setItem('jwtToken', response.data.accessToken);
+        const k = {Email:this.input.Email, password: this.input.password};
+        console.log(k);
+        axios.post('http://localhost:3000/login',k).then(response => {
           console.log(response.data.accessToken);
           this.$emit("login");
           this.$store.commit("setAuthentification",true);
           this.$store.commit("setName",response.data.data.Nom);
           this.$store.commit("setEmail",response.data.data.Email);
           this.$store.commit("setRole",response.data.data.role)
-          console.log(response.data.data.Nom);      // console.log agi LA DOUANE Hhhhhhhhhhhhhhhhhhhhhhhhhhh
+          this.$store.commit("setToken",response.data.accessToken)
+          console.log(response.data.data.Nom);      // console.log to DEBUG
           console.log(response.data.data.Email);
           console.log(response.data.data.role);
           console.log(response.data);
-          this.$router.replace({name: 'home'})
+          if(response.data.data.role == "admin")
+          {
+            this.$emit("admin");
+            this.$router.replace({name: 'Dashboard'});
+          }else{
+            this.$router.replace({name: 'home'});
+          }
         }).catch(e => {
           console.log(e)
           this.errors.push(e)
@@ -215,10 +220,10 @@ export default {
         })
       }
     },
-    signUpSubmit (evt) {
+    signUpSubmit (evt) {             //
       evt.preventDefault()
-      const kek = JSON.stringify(this.input);
-      console.log(kek);                   // top kek
+      const k = JSON.stringify(this.input);
+      console.log(k);
       if(this.$refs.observer.validate()){
         axios.post('http://localhost:3000/signup',
         {
