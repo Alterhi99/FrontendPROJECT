@@ -37,8 +37,8 @@
                         <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Jobseeker</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link v-if="role=='Recruiter'"  v-bind:to="{ name: 'Offers' }" class="nav-link font-weight-bold" active-class="active">Recruiter</router-link>
-                        <router-link v-else-if="role=='Jobseeker'" v-bind:to="{ name: 'Offerlist' }" class="nav-link font-weight-bold" active-class="active">Offers</router-link>
+                      <router-link v-if="role=='Recruiter'"  v-bind:to="{ name: 'Offers' }" class="nav-link font-weight-bold" active-class="active">Recruiter</router-link>
+                      <router-link v-else-if="role=='Jobseeker'" v-bind:to="{ name: 'Offerlist' }" class="nav-link font-weight-bold" active-class="active">Offers</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link font-weight-bold" active-class="active">Contact</router-link>
@@ -76,24 +76,8 @@
 
      <!-- OFFERS -->
    <div class="justify-content-center">
-     <h1 class="mb-5 text-center" data-aos="fade-up"> Manage your <strong>offers</strong></h1>
-     <template >
-        <v-tabs class="mb-5 text-center" align-with-title>
-          <v-tabs-slider color="yellow"></v-tabs-slider>
-          <v-tab class="font-weight-bold">
-            View offers
-          </v-tab>
-          <v-tab-item>
-            <joblist @back="refreshPage" Data-aos="fade-up" data-aos-delay="300"></joblist>
-          </v-tab-item>
-          <v-tab class="font-weight-bold">
-            Add offers
-          </v-tab>
-          <v-tab-item >
-            <jobform @back="refreshPage" Data-aos="fade-up" data-aos-delay="300"></jobform>
-          </v-tab-item>
-        </v-tabs>
-     </template>
+     <h1 class="mb-5 text-center" data-aos="fade-up"> Browse <strong>offers</strong></h1>
+     <offerlist @back="refreshPage" Data-aos="fade-up" data-aos-delay="300"></offerlist>
    </div>
 
    <!-- FOOTER -->
@@ -109,8 +93,7 @@
 import logo from './images/logo.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import joblist from '../subcomponents/joblist';
-import jobform from '../subcomponents/jobform';
+import offerlist from '../subcomponents/offerlist';
 import ufooter from '../layout/ufooter';
 
      export default {
@@ -135,8 +118,7 @@ import ufooter from '../layout/ufooter';
 
        },
        components:{
-         joblist,
-         jobform,
+         offerlist,
          ufooter,
        },
        methods: {
@@ -163,10 +145,15 @@ import ufooter from '../layout/ufooter';
          this.user.fullName = this.$store.getters.getName;
          this.role = this.$store.getters.getRole;
          this.user.initials = this.user.fullName.charAt(0).toUpperCase();
-         console.log(this.role);
+         console.log(this.$store.getters.getAuth);
+         console.log(this.$store.getters.getEmail);
+         console.log(this.$store.getters.getName);
+         console.log(this.user.initials);
+         console.log(this.user.fullName);
+         console.log(this.user.email);
        },
        beforeMount(){
-
+         this.role = his.$store.getters.getRole;
        },
      };
   </script>

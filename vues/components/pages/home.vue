@@ -37,7 +37,8 @@
                         <router-link  v-bind:to="{ name: 'Login' }" class="nav-link smoothScroll font-weight-bold" active-class="active">Jobseeker</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link  v-bind:to="{ name: 'Offers' }" class="nav-link font-weight-bold" active-class="active">Recruiter</router-link>
+                      <router-link v-if="role=='Recruiter'"  v-bind:to="{ name: 'Offers' }" class="nav-link font-weight-bold" active-class="active">Recruiter</router-link>
+                      <router-link v-else-if="role=='Jobseeker'" v-bind:to="{ name: 'Offerlist' }" class="nav-link font-weight-bold" active-class="active">Offers</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link  v-bind:to="{ name: 'Contact' }" class="nav-link font-weight-bold" active-class="active">Contact</router-link>
@@ -83,7 +84,7 @@
 
                                    <h1 class="text-white" data-aos="fade-up">Sieze your opportunity</h1>
 
-                                   <a href="contact.html" class="custom-btn btn-bg btn mt-3" data-aos="fade-up" data-aos-delay="100">Let us discuss together!</a>
+                                   <a  href="contact.html" class="custom-btn btn-bg btn mt-3" data-aos="fade-up" data-aos-delay="100">Let us discuss together!</a>
 
                               </div>
                         </div>
@@ -249,13 +250,17 @@ import 'aos/dist/aos.css';
          this.login = this.$store.getters.getAuth;
          this.user.email = this.$store.getters.getEmail;
          this.user.fullName = this.$store.getters.getName;
+         this.role = this.$store.getters.getRole;
+         this.user.initials = this.user.fullName.charAt(0).toUpperCase();
          console.log(this.$store.getters.getAuth);
          console.log(this.$store.getters.getEmail);
          console.log(this.$store.getters.getName);
-         this.user.initials = this.user.fullName.charAt(0).toUpperCase();
          console.log(this.user.initials);
          console.log(this.user.fullName);
          console.log(this.user.email);
+       },
+       beforeMount(){
+         this.role = his.$store.getters.getRole;
        },
      };
   </script>

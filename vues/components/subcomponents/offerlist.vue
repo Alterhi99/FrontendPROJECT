@@ -3,10 +3,10 @@
 @Date:   2021-06-03T21:13:00+01:00
 @Email:  alterhichem99@gmail.com
 @Project: Jobhunt
-@Last modified by:   Hayden
-@Last modified time: 2021-06-13T16:39:09+01:00
+@Last modified by:   hayden99
+@Last modified time: 2021-06-16T22:37:08+01:00
 -->
-<!-- Listes des offres d'emplois (pour recruteur)  -->
+<!-- Listes des offres d'emplois (pour Jobseeker)  -->
 <template>
   <v-container fluid >
     <v-data-iterator
@@ -104,23 +104,126 @@
                 <div class="d-flex justify-content-center">
                   <v-dialog persistent v-model="dialog"
                   :retain-focus="false" max-width="900px">
-                    <!--  DONT TOUCH RETAIN FOCUS OR CHROME WILL EXPLODE
-                    800 ERRORS IN 10 SECONDS LOOOOLLLL -->
+                    <!--  DONT TOUCH RETAIN FOCUS -->
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn color="#FFC600" :value="true" v-bind="attrs"
                       v-on="on">
-                        Edit
+                        Details
                       </v-btn>
                     </template>
                     <v-card>
                       <v-card-title>
-                        <span class="text-h5">Edit Offer</span>
+                        <span class="text-h5">Details Offer</span>
                       </v-card-title>
                       <v-card-text>
-
+                        <v-row justify="center">
+                                <v-container>
+                                  <v-row>
+                                    <v-col cols="12" sm="6" md="4">
+                                      <v-text-field
+                                        v-model=" item.IntituleOffre "
+                                        label="Entitled"
+                                        readonly
+                                        background-color="grey lighten-2"
+                                      ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="4">
+                                      <v-text-field
+                                        v-model ="item.Lieu"
+                                        label="Address"
+                                        readonly
+                                        prepend-inner-icon="mdi-map-marker"
+                                        background-color="grey lighten-2"
+                                      ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12">
+                                      <v-textarea
+                                        v-model="item.Description"
+                                        label="Description*"
+                                        readonly
+                                        background-color="grey lighten-2"
+                                      ></v-textarea>
+                                    </v-col>
+                                    <v-col
+                                      cols="12"
+                                      sm="6"
+                                    >
+                                    <v-row>
+                                       <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        >
+                                        <v-menu
+                                          ref="menu"
+                                          v-model="menu"
+                                          :close-on-content-click="false"
+                                          :return-value.sync="item.From"
+                                          transition="scale-transition"
+                                          offset-y
+                                          min-width="auto"
+                                        >
+                                          <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field
+                                              v-model="item.From"
+                                              label="From"
+                                              prepend-icon="mdi-calendar"
+                                              readonly
+                                              v-bind="attrs"
+                                              v-on="on"
+                                            ></v-text-field>
+                                          </template>
+                                          <v-date-picker
+                                            v-model="item.From"
+                                            no-title
+                                            scrollable
+                                            dark
+                                            readonly
+                                          >
+                                          </v-date-picker>
+                                        </v-menu>
+                                      </v-col>
+                                      <v-col
+                                       cols="12"
+                                       sm="6"
+                                       md="4"
+                                       >
+                                       <v-menu
+                                         ref="menu2"
+                                         v-model="menu2"
+                                         :close-on-content-click="false"
+                                         :return-value.sync="item.To"
+                                         transition="scale-transition"
+                                         offset-y
+                                         min-width="auto"
+                                       >
+                                         <template v-slot:activator="{ on, attrs }">
+                                           <v-text-field
+                                             v-model="item.To"
+                                             label="To"
+                                             prepend-icon="mdi-calendar"
+                                             readonly
+                                             v-bind="attrs"
+                                             v-on="on"
+                                           ></v-text-field>
+                                         </template>
+                                         <v-date-picker
+                                           v-model="item.To"
+                                           no-title
+                                           scrollable
+                                           dark
+                                         >
+                                         </v-date-picker>
+                                       </v-menu>
+                                     </v-col>
+                                     </v-row>
+                                    </v-col>
+                                  </v-row>
+                                </v-container>
+                        </v-row>
                       </v-card-text>
                       <v-btn color="#FFC600" @click='$emit("back")'>
-                        Edit
+                        Apply
                       </v-btn>
                       <v-btn
                        color="#1A1A1A" style="color:white;"
@@ -130,11 +233,6 @@
                       </v-btn>
                     </v-card>
                   </v-dialog>
-                  <v-btn color="#1A1A1A" style="color:white;"
-                  :value="true"
-                  @click='deleteOffer(item["Offer Number"]);'>
-                   Delete
-                  </v-btn>
               </div>
               </v-list>
             </v-card>
@@ -208,8 +306,9 @@
   </v-container>
 </template>
 <script>
+/* eslint-disable */
 import axios from 'axios';
-import Swal from 'sweetalert2'; /* eslint-disable */
+import Swal from 'sweetalert2';
 import jobformEdit from '../subcomponents/jobformEdit';
 
 export default {
@@ -224,7 +323,7 @@ export default {
       itemsPerPage: 8,
       sortBy: 'IntituleOffre',
       keys: [
-        'Offer Number',
+
         'From',
         'To',
         'Address',
@@ -233,6 +332,11 @@ export default {
       items: [
 
       ],
+      role: '',
+      menu: false,
+      modal: false,
+      menu2: false,
+      modal2: false,
     };
   },
   components:{
@@ -281,24 +385,6 @@ export default {
       this.items = data;
       console.log(this.items);
     },
-    deleteOffer(id) {  // fonction pour supprimer offre
-      console.log(id);
-      axios.delete(`http://localhost:3000/deleteOffer/${id}`)
-        .then((response) => {
-          console.log(response);
-          Swal.fire({
-            title: 'Success!',
-            text: response.data.message,
-            type: 'success',
-          }).then(function () {
-            this.emitBack();     //recharger la page
-          });
-        }).catch((e) => {
-          console.log(e);
-          this.errors.push(e);
-          Swal.fire('Error!', `${e}`, 'error');
-        });
-    },
     refreshPage(){
       this.$forceUpdate();
     },
@@ -312,6 +398,7 @@ export default {
     axios.get('http://localhost:3000/getOffers').then((resp) => {
       this.loadData(resp.data.data);
     });
+
   },
   mounted(){
     this.$root.$on('reload', data => {

@@ -496,6 +496,14 @@ export default {
       this.$refs.observer.reset()
     },
   },
+  mounted(){
+    this.$root.$on('reload', data => {
+        console.log('reloading....');
+        axios.get('http://localhost:3000/getOffers').then((resp) => {
+          this.loadData(resp.data.data);
+        });
+    });
+  },
 };
 export var td;
 </script>

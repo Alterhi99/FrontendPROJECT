@@ -16,6 +16,7 @@ import Login from '@/components/Login';
 import Home from '@/components/pages/home';
 import Contact from '@/components/pages/contact';
 import Offers from '@/components/pages/offer';
+import Seek from '@/components/pages/seek';
 import store from '@/store/store';
 
 Vue.use(Router);
@@ -38,10 +39,22 @@ export default new Router({
         name: 'Offers',
         component: Offers,
         beforeEnter:(to, from, next) =>{
-          if((store.state.auth == true)&& (store.state.role="Jobseeker")){
+          if(store.state.auth == true){
             next();
           }else{
-            next("/home");
+            next("/Login");
+          }
+        }
+    },
+    {
+        path: '/Offerlist',
+        name: 'Offerlist',
+        component: Seek,
+        beforeEnter:(to, from, next) =>{
+          if(store.state.auth == true){
+            next();
+          }else{
+            next("/Login");
           }
         }
     },
