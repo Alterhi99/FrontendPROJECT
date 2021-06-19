@@ -110,19 +110,19 @@ import {extend, ValidationObserver, ValidationProvider, setInteractionMode} from
 
 setInteractionMode('eager');
 
-extend('alpha_spaces', {             //les messages additionnel lors de la validation
+extend('alpha_spaces', {             //REGEX pour les lettres
   ...alpha_spaces,
   message: '{_field_} must contain only letters!',
 });
-extend('email', {
+extend('email', {                   //REGEX pour email
   ...email,
   message: 'Email must be valid',
 });
-extend('max', {
+extend('max', {                    //regex pour compte max des lettres
   ...max,
   message: '{_field_} may not be greater than {length} characters',
 });
-extend('confirmed', {
+extend('confirmed', {                 //regex pour confirmation mdp
   params: ['target'],
   validate(value, { target }) {
     return value === target;

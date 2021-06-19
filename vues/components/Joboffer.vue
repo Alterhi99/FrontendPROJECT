@@ -69,11 +69,13 @@
         </template>
       </v-data-table>
       <joblist/>
+      <jobform/>
     </v-layout>
 </v-layout>
 </template>
 <script type="text/javascript">
 import joblist from '@/components/subcomponents/joblist';
+import jobform from '@/components/subcomponents/jobform';
 
 /* eslint-disable */
 export default {
@@ -136,7 +138,8 @@ export default {
     };
   },
   components: {
-    joblist
+    joblist,
+    jobform,
   },
   methods: {
     handleSelectionChange(rows) {      //usless functions

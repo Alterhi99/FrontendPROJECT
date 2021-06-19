@@ -31,7 +31,7 @@ const UserSchema = new Schema({
  role: {
   type: String,
   default: 'Jobseeker',
-  enum: ["Jobseeker", "Recuiter", "admin"]
+  enum: ["Jobseeker", "Recruiter", "admin"]
  },
 Compte_verified: {
    type: Boolean,
